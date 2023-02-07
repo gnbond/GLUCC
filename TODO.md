@@ -1,0 +1,8 @@
+- document nullable_function
+- import rectangular
+- import format_guard
+- finish and import dereference_iterator
+- add not-compile tests
+- use latest Catch2, inc CMake integration, as directory tree not single header
+- add Packer and Unpacker for binary network packets
+- 

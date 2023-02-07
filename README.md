@@ -1,18 +1,18 @@
 # GLUCC <!-- omit from toc -->
 Greg's List of Useful C++ Classes
 
-- [Introduction](#introduction)
-- [Support](#support)
-- [Why GLUCC?](#why-glucc)
-- [Code style](#code-style)
-- [The Classes](#the-classes)
-  - [`format_guard`](#format_guard)
-  - [`rectangular`](#rectangular)
-- [The Templates](#the-templates)
-  - [`nullable_function`](#nullable_function)
-  - [`dereference_iterator`](#dereference_iterator)
+- [1. Introduction](#1-introduction)
+- [2. Support](#2-support)
+- [3. Why GLUCC?](#3-why-glucc)
+- [4. Code style](#4-code-style)
+- [5. The Classes](#5-the-classes)
+  - [5.1. `format_guard`](#51-format_guard)
+  - [5.2. `rectangular`](#52-rectangular)
+- [6. The Templates](#6-the-templates)
+  - [6.1. `nullable_function`](#61-nullable_function)
+  - [6.2. `dereference_iterator`](#62-dereference_iterator)
 
-# Introduction
+# 1. Introduction
 
 This is a small collection of C++17 classes and templates that I have found
 useful in some of my personal projects.   I've gathered them here in one place,
@@ -29,15 +29,15 @@ comprehensively unit-tested using [Catch2](https://github.com/catchorg/Catch2)
 is included to built the unit tests but is not required to use any of these
 classes in your project.
 
-# Support
+# 2. Support
 
-The long-term home of this project is on (GitHub)[https://github.com/gnbond/GLUCC].
+The long-term home of this project is on [GitHub](https://github.com/gnbond/GLUCC).
 
 As stated in the [License](LICENSE), this code is provided as-is with absolutely
 no warranty.  That said, I am always happy to receive comments, suggestions,
 pull requests or issues on GitHub, tho I cannot promise timely responses.
 
-# Why GLUCC?
+# 3. Why GLUCC?
 
 There are plenty of other class libraries out there, why a new one?
 
@@ -71,7 +71,7 @@ similar collections of classes, but still be hopefully at least a little bit
 evocative of what this library contains.  And who knows, if this really takes
 off we can rename it "General Library of Useful C++ Classes".
 
-# Code style
+# 4. Code style
 
 Code is written to C++17 standard, and while most should work on C++11, this is
 not guaranteed.  I've chosen not to use any C++20 features, even though ranges
@@ -82,9 +82,10 @@ you are still using C++03, heck that's now 20 years old, so sorry, not
 supported.
 
 All the definitions are in the `glucc::` namespace.  Identifiers are
-`lower_case_underscore` to match the naming style of the standard library. Code
-is checked with `clang-tidy` and formatted with `clang-format`, and the settings
-for these tools are in the root of the project.  
+`lower_case_underscore` and types are `Upper_Underscore`, to match the naming
+style of the standard library. Code is checked with `clang-tidy` and formatted
+with `clang-format`, and the settings for these tools are in the root of the
+project.  
 
 Coding style and conventions have been mostly inspired by Sutter & Stroustrup's
 [CPP Core
@@ -96,9 +97,9 @@ naming and coding style to match the rest of your project when you copy a file
 into your project.  Most components are quite small so this should not be a big
 burden.
 
-# The Classes
+# 5. The Classes
 
-## `format_guard`
+## 5.1. `format_guard`
 
 This is an
 [RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii)
@@ -121,17 +122,25 @@ void print_hex(int i)
 } // std::cout is reverted to previous integer formatting here
 ```
 
-## `rectangular`
+## 5.2. `rectangular`
 
-# The Templates
+# 6. The Templates
 
-## `nullable_function`
+## 6.1. `nullable_function`
 
-The `std::function` template is extremely useful but has one annoying feature when used in some designs.  A `std::function` can be _empty_, and default-constructed objects are created as _empty_.  An _empty_ std::function is more or less equivalent to a null pointer, and like a null pointer will coredump if dereferenced.  So for designs where the function is optional (such as when used for a callback), the code is full of constructs like
+The `std::function` template is extremely useful but has one annoying feature
+when used in some designs.  A `std::function` can be _empty_, and
+default-constructed objects are created as _empty_.  An _empty_ std::function is
+more or less equivalent to a null pointer, and will throw an exception if
+dereferenced.  So for designs where the function is optional (such as when used
+for a callback), the code is full of constructs like
 ```C++
  std::function<void()> m_func{};
  // ...
- if (m_func) m_func();
+ if (m_func)
+ {
+      m_func();
+ }
 ```
 `nullable_function` automates this test, so removing it from the application code:
 ```C++
@@ -141,5 +150,5 @@ m_func();  // Always safe
 ```
 
 
-## `dereference_iterator`
+## 6.2. `dereference_iterator`
 
