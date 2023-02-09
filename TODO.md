@@ -1,4 +1,4 @@
-- document nullable_function
+- document nullable_function.  rename it to optional_function?
 - import rectangular
 - import format_guard
 - finish and import dereference_iterator
