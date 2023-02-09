@@ -1,6 +1,6 @@
-#include "nullable_function.hpp"
-
 #include <catch2/catch.hpp>
+
+#include "nullable_function.hpp"
 
 using Int_Func = glucc::nullable_function<int()>;
 using Void_Func = glucc::nullable_function<void()>;
@@ -9,7 +9,7 @@ using Double_Args_Func = glucc::nullable_function<double(double, int)>;
 
 static int ret_two() { return 2; }
 
-bool ret_void_called = false;
+static bool ret_void_called = false;
 static void ret_void() { ret_void_called = true; }
 
 static int ret_twice(int i) { return 2 * i; }
@@ -105,8 +105,8 @@ TEST_CASE("nullable_function With Two Arguments", "[nullable_function]") {
     Double_Args_Func f{};
 
     CHECK_FALSE(f);
-    CHECK(f(4.0, 3) ==
-          0.0);  // This compiles and is safe and returns default val
+    // This compiles and is safe and returns default val
+    CHECK(f(4.0, 3) == 0.0);
 
     // From a pointer-to-function
     Double_Args_Func f2{ret_times};

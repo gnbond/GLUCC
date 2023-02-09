@@ -1,0 +1,12 @@
+{
+    "doxdocgen.file.copyrightTag": [
+     "@copyright This file is in the public domain.  See <https://unlicense.org>",
+     "",
+     "This and other fine code available from https://github.com/gnbond/GLUCC",
+     "",
+     "Comments / issues / pull requests gladly accepted"
+    ],
+    "doxdocgen.file.fileOrder": [
+        "file", "author", "email", "copyright"
+    ]
+}
