@@ -37,10 +37,9 @@ can just be copied into a target project and used.  No need to install an entire
 library or manage an extra dependency just to get some small helper classes.
 
 Each class is documented in the header with Doxygen.  Each class should be
-comprehensively unit-tested using [Catch2](https://github.com/catchorg/Catch2)
-(and a copy of Catch2 v2.13 is included for convenience).  A CMake-based build
-is included to built the unit tests but is not required to use any of these
-classes in your project.
+comprehensively unit-tested using [Catch2](https://github.com/catchorg/Catch2).
+A CMake-based build is included to built the documentation and unit tests but is
+not required to use any of these classes in your project.
 
 # 2. Documentation
 
@@ -100,8 +99,8 @@ supported.
 
 All the definitions are in the `glucc::` namespace.  Identifiers are
 `lower_case_underscore`, to match the naming style of the standard library. Code
-is checked with `clang-tidy` and formatted with `clang-format`, and the settings
-for these tools are in the root of the project.  
+is (will be!) checked with `clang-tidy` and formatted with `clang-format`, and
+the settings for these tools are in the root of the project.  
 
 Coding style and conventions have been mostly inspired by Sutter & Stroustrup's
 [CPP Core
@@ -112,6 +111,12 @@ However you are obviously free (and encouraged) to change the namespace, the
 naming and coding style to match the rest of your project when you copy a file
 into your project.  Most components are quite small so this should not be a big
 burden.
+
+The unit tests use CMake FetchContent to download the Catch2 framework from
+[Catch2 GutHub page](https://github.com/catchorg/Catch2) at configure time. This
+means Configure takes a while, and the first build also takes a while as the
+Catch2 code is compiled, but after that building and running unit tests is very
+fast (much faster than the single-header version of Catch2 2.x).
 
 # 6. The Classes
 

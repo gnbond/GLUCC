@@ -96,14 +96,14 @@ GLUCC - Greg's List of Useful C++ Classes</h1>
 1. Introduction</h1>
 <p>This is a small collection of C++17 classes and templates that I have found useful in some of my personal projects. I've gathered them here in one place, with a very forgiving license, in the hope they may be useful to others.</p>
 <p>The intent is that each class or template is more or less stand-alone with few or no dependencies. With the forgiving license, files (and their unit tests!) can just be copied into a target project and used. No need to install an entire library or manage an extra dependency just to get some small helper classes.</p>
-<p>Each class is documented in the header with Doxygen. Each class should be comprehensively unit-tested using <a href="https://github.com/catchorg/Catch2">Catch2</a> (and a copy of Catch2 v2.13 is included for convenience). A CMake-based build is included to built the unit tests but is not required to use any of these classes in your project.</p>
+<p>Each class is documented in the header with Doxygen. Each class should be comprehensively unit-tested using <a href="https://github.com/catchorg/Catch2">Catch2</a>. A CMake-based build is included to built the documentation and unit tests but is not required to use any of these classes in your project.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 2. Documentation</h1>
 <p>The Doxygen-generated documentation is in the <code>docs/</code> directory, and can be accessed online via <a href="https://gnbond.github.io/GLUCC/">GLUCC Github Page</a></p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 3. Support</h1>
 <p>The long-term home of this project is on <a href="https://github.com/gnbond/GLUCC">GitHub</a>.</p>
-<p>As stated in the <a class="el" href="md__l_i_c_e_n_s_e.html">License</a>, this code is provided as-is with absolutely no warranty. That said, I am always happy to receive comments, suggestions, pull requests or issues on GitHub, tho I cannot promise timely responses.</p>
+<p>As stated in the License, this code is provided as-is with absolutely no warranty. That said, I am always happy to receive comments, suggestions, pull requests or issues on GitHub, tho I cannot promise timely responses.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 4. Why GLUCC?</h1>
 <p>There are plenty of other class libraries out there, why a new one?</p>
@@ -116,10 +116,11 @@ don't want to install 500Mb of Boost to get it", maybe GLUCC can help.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 5. Code style</h1>
 <p>Code is written to C++17 standard, and while most should work on C++11, this is not guaranteed. I've chosen not to use any C++20 features, even though ranges and concepts would make some of these templates cleaner, as even now (Jan 2023) C++20 support is not widespread and using C++20 features might restrict the usefulness in projects that are not yet compiled with C++20 compilers. And if you are still using C++03, heck that's now 20 years old, so sorry, not supported.</p>
-<p>All the definitions are in the <code>glucc::</code> namespace. Identifiers are <code>lower_case_underscore</code>, to match the naming style of the standard library. Code is checked with <code>clang-tidy</code> and formatted with <code>clang-format</code>, and the settings for these tools are in the root of the project. <br  />
+<p>All the definitions are in the <code>glucc::</code> namespace. Identifiers are <code>lower_case_underscore</code>, to match the naming style of the standard library. Code is (will be!) checked with <code>clang-tidy</code> and formatted with <code>clang-format</code>, and the settings for these tools are in the root of the project. <br  />
 </p>
 <p>Coding style and conventions have been mostly inspired by Sutter &amp; Stroustrup's <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines">CPP Core Guidelines</a>, which should be required reading for any modern C++ programmer.</p>
 <p>However you are obviously free (and encouraged) to change the namespace, the naming and coding style to match the rest of your project when you copy a file into your project. Most components are quite small so this should not be a big burden.</p>
+<p>The unit tests use CMake FetchContent to download the Catch2 framework from <a href="https://github.com/catchorg/Catch2">Catch2 GutHub page</a> at configure time. This means Configure takes a while, and the first build also takes a while as the Catch2 code is compiled, but after that building and running unit tests is very fast (much faster than the single-header version of Catch2 2.x).</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 6. The Classes</h1>
 <h2><a class="anchor" id="autotoc_md7"></a>

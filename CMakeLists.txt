@@ -4,6 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(GLUCC LANGUAGES CXX VERSION 1.0)
 
+
 enable_testing()
 
 find_package(Doxygen)

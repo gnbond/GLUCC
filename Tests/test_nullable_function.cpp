@@ -1,6 +1,6 @@
-#include <catch2/catch.hpp>
-
 #include "nullable_function.hpp"
+
+#include <catch2/catch_test_macros.hpp>
 
 using Int_Func = glucc::nullable_function<int()>;
 using Void_Func = glucc::nullable_function<void()>;
