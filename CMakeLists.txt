@@ -9,8 +9,6 @@ set(HEADERS
     format_guard.hpp
 )
 
-enable_testing()
-
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     # Doxygen markdoun formatter is not totally compatible with GitHub. So we
@@ -27,7 +25,7 @@ if(DOXYGEN_FOUND)
     )
     set(DOXYGEN_HTML_OUTPUT .)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${CMAKE_CURRENT_BINARY_DIR}/README.md)
-    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs)
+    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs/doxygen)
     doxygen_add_docs(Doxygen
         ${HEADERS}
         ${CMAKE_CURRENT_BINARY_DIR}/README.md
@@ -37,4 +35,5 @@ else()
     message(INFO "Doxygen not found")
 endif()
 
+enable_testing()
 add_subdirectory(Tests)

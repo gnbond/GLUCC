@@ -77,14 +77,10 @@ $(function() {
 <li class="level1"><a href="#autotoc_md1">1. Introduction</a></li>
 <li class="level1"><a href="#autotoc_md2">2. Documentation</a></li>
 <li class="level1"><a href="#autotoc_md3">3. Support</a></li>
-<li class="level1"><a href="#autotoc_md4">4. Why GLUCC?</a></li>
-<li class="level1"><a href="#autotoc_md5">5. Code style</a></li>
-<li class="level1"><a href="#autotoc_md6">6. The Classes</a><ul><li class="level2"><a href="#autotoc_md7">6.1. format_guard</a></li>
-</ul>
-</li>
-<li class="level1"><a href="#autotoc_md8">7. The Templates</a><ul><li class="level2"><a href="#autotoc_md9">7.1. nullable_function</a></li>
-<li class="level2"><a href="#autotoc_md10">7.2. dereference_iterator</a></li>
-<li class="level2"><a href="#autotoc_md11">7.3. rectangular</a></li>
+<li class="level1"><a href="#autotoc_md4">4. The Templates</a><ul><li class="level2"><a href="#autotoc_md5">4.1. format_guard</a></li>
+<li class="level2"><a href="#autotoc_md6">4.2. nullable_function</a></li>
+<li class="level2"><a href="#autotoc_md7">4.3. dereference_iterator</a></li>
+<li class="level2"><a href="#autotoc_md8">4.4. rectangular</a></li>
 </ul>
 </li>
 </ul>
@@ -99,61 +95,23 @@ GLUCC - Greg's List of Useful C++ Classes</h1>
 <p>Each class is documented in the header with Doxygen. Each class should be comprehensively unit-tested using <a href="https://github.com/catchorg/Catch2">Catch2</a>. A CMake-based build is included to built the documentation and unit tests but is not required to use any of these classes in your project.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 2. Documentation</h1>
-<p>The Doxygen-generated documentation is in the <code>docs/</code> directory, and can be accessed online via <a href="https://gnbond.github.io/GLUCC/">GLUCC Github Page</a></p>
+<p>The documentation is in the <code>docs/</code> directory, and can be accessed online via <a href="https://gnbond.github.io/GLUCC/">GLUCC Github Page</a>. Doxygen-generated API is in the <a href="docs/doxygen/index.html">docs/doxygen</a> directory.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 3. Support</h1>
 <p>The long-term home of this project is on <a href="https://github.com/gnbond/GLUCC">GitHub</a>.</p>
 <p>As stated in the <a class="el" href="md__l_i_c_e_n_s_e.html">License</a>, this code is provided as-is with absolutely no warranty. That said, I am always happy to receive comments, suggestions, pull requests or issues on GitHub, tho I cannot promise timely responses.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
-4. Why GLUCC?</h1>
-<p>There are plenty of other class libraries out there, why a new one?</p>
-<p>Firstly, and most importantly, because creating well-designed and useful library classes is <em>fun</em>, and it is a skill that can always be improved. Making the results available to all allows others to give a different perspective that hopefully can improve designs or implementation, and in turn hopefully I can learn new stuff as well.</p>
-<p>Secondly, this allows me to experiment with tools and language features that I might not get to use in my day job (which is currently also C++ coding.) For example I don't do a lot of template hackery on my current project so some of these templates have been a useful exercise exploring Template Meta-Programming. Restricting support to C++17 (and later) means I can use new language features without worrying about how ten year old compilers might handle them.</p>
-<p>Thirdly, most of the existing class collections are either very restrictively licensed (GNU, I'm looking at you) or heavyweight installations that require a lot of dependency management (yes, Boost, I'm talking about you), or for other reasons not easy to extract one or two small pieces for use in your project. If you're already drinking the Boost Kool-Aid, there's probably nothing of interest here. If you've ever thought "I really want an IOStream format guard but I
-don't want to install 500Mb of Boost to get it", maybe GLUCC can help.</p>
-<p>Some of the classes here are inspired by classes found other libraries, or by code snippets on StackOverflow or such, I have attributed those sources in code comments, where appropriate.</p>
-<p>The name was chosen to be pronounceable and hopefully not clash with other similar collections of classes, but still be hopefully at least a little bit evocative of what this library contains. And who knows, if this really takes off we can rename it "General Library of Useful C++ Classes".</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
-5. Code style</h1>
-<p>Code is written to C++17 standard, and while most should work on C++11, this is not guaranteed. I've chosen not to use any C++20 features, even though ranges and concepts would make some of these templates cleaner, as even now (Jan 2023) C++20 support is not widespread and using C++20 features might restrict the usefulness in projects that are not yet compiled with C++20 compilers. And if you are still using C++03, heck that's now 20 years old, so sorry, not supported.</p>
-<p>All the definitions are in the <code>glucc::</code> namespace. Identifiers are <code>lower_case_underscore</code>, to match the naming style of the standard library. Code is (will be!) checked with <code>clang-tidy</code> and formatted with <code>clang-format</code>, and the settings for these tools are in the root of the project. <br  />
-</p>
-<p>Coding style and conventions have been mostly inspired by Sutter &amp; Stroustrup's <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines">CPP Core Guidelines</a>, which should be required reading for any modern C++ programmer.</p>
-<p>However you are obviously free (and encouraged) to change the namespace, the naming and coding style to match the rest of your project when you copy a file into your project. Most components are quite small so this should not be a big burden.</p>
-<p>The unit tests use CMake FetchContent to download the Catch2 framework from <a href="https://github.com/catchorg/Catch2">Catch2 GutHub page</a> at configure time. This means Configure takes a while, and the first build also takes a while as the Catch2 code is compiled, but after that building and running unit tests is very fast (much faster than the single-header version of Catch2 2.x).</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
-6. The Classes</h1>
+4. The Templates</h1>
+<h2><a class="anchor" id="autotoc_md5"></a>
+4.1. format_guard</h2>
+<p>An <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii">RAII</a> helper that saves the IOStream formatting state then automatically reverts it on destruction.</p>
+<h2><a class="anchor" id="autotoc_md6"></a>
+4.2. nullable_function</h2>
+<p>A <code>std::function</code> wrapper that is safe to call even if empty</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
-6.1. format_guard</h2>
-<p>This is an <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii">RAII</a> helper that saves the IOStream formatting state then automatically reverts it on destruction. IOStreams is type-safe and easily extensible, but for anything other than default formatting of built-in types is both verbose and prone to unexpected side-effects, as most (but not all!) of the I/O manipulators change the underling stream object, and hence will affect all future operations unless manually reverted. <br  />
-</p>
-<p>Sample use: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> print_hex(<span class="keywordtype">int</span> i)</div>
-<div class="line">{</div>
-<div class="line">    <a class="code hl_class" href="classglucc_1_1format__guard.html">glucc::format_guard</a> g{ std::cout };</div>
-<div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; std::hex() &lt;&lt; std::set_fill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(8) &lt;&lt; i;</div>
-<div class="line">    <span class="comment">// Confusingly, the next line would produce &quot;f&quot; because hex() is sticky but setw() is not!</span></div>
-<div class="line">    <span class="comment">// std::cout &lt;&lt; 15;</span></div>
-<div class="line">} <span class="comment">// std::cout is reverted to previous integer formatting here</span></div>
-<div class="ttc" id="aclassglucc_1_1format__guard_html"><div class="ttname"><a href="classglucc_1_1format__guard.html">glucc::format_guard</a></div><div class="ttdoc">RAII guard for restoring IOStream formatting state.</div><div class="ttdef"><b>Definition:</b> format_guard.hpp:74</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
-7. The Templates</h1>
-<h2><a class="anchor" id="autotoc_md9"></a>
-7.1. nullable_function</h2>
-<p>The <code>std::function</code> template is extremely useful but has one annoying feature when used in some designs. A <code>std::function</code> can be <em>empty</em>, and default-constructed objects are created as <em>empty</em>. An <em>empty</em> std::function is more or less equivalent to a null pointer, and will throw an exception if dereferenced. So for designs where the function is optional (such as when used for a callback), the code is full of constructs like </p><div class="fragment"><div class="line">std::function&lt;void()&gt; m_func{};</div>
-<div class="line"><span class="comment">// ...</span></div>
-<div class="line"><span class="keywordflow">if</span> (m_func)</div>
-<div class="line">{</div>
-<div class="line">     m_func();</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> <code>nullable_function</code> automates this test, so removing it from the application code: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structglucc_1_1nullable__function.html">glucc::nullable_function</a>&lt;void()&gt; m_func{};</div>
-<div class="line"><span class="comment">// ...</span></div>
-<div class="line">m_func();  <span class="comment">// Always safe</span></div>
-<div class="ttc" id="astructglucc_1_1nullable__function_html"><div class="ttname"><a href="structglucc_1_1nullable__function.html">glucc::nullable_function</a></div><div class="ttdoc">Wrapper for std::function that can be safely left empty.</div><div class="ttdef"><b>Definition:</b> nullable_function.hpp:68</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
-7.2. dereference_iterator</h2>
-<h2><a class="anchor" id="autotoc_md11"></a>
-7.3. rectangular</h2>
+4.3. dereference_iterator</h2>
+<h2><a class="anchor" id="autotoc_md8"></a>
+4.4. rectangular</h2>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
