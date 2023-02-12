@@ -17,6 +17,7 @@ include(Catch)
 
 set(TEST_FILES
     test_nullable_function.cpp
+    test_format_guard.cpp
 )
 
 add_executable(UnitTests ${TEST_FILES} )

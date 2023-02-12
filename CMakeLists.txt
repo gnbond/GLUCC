@@ -4,6 +4,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(GLUCC LANGUAGES CXX VERSION 1.0)
 
+set(HEADERS 
+    nullable_function.hpp
+    format_guard.hpp
+)
 
 enable_testing()
 
@@ -25,7 +29,7 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${CMAKE_CURRENT_BINARY_DIR}/README.md)
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs)
     doxygen_add_docs(Doxygen
-        nullable_function.hpp
+        ${HEADERS}
         ${CMAKE_CURRENT_BINARY_DIR}/README.md
         LICENSE.md
     )
