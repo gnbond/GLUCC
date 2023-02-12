@@ -103,7 +103,7 @@ GLUCC - Greg's List of Useful C++ Classes</h1>
 <h1><a class="anchor" id="autotoc_md3"></a>
 3. Support</h1>
 <p>The long-term home of this project is on <a href="https://github.com/gnbond/GLUCC">GitHub</a>.</p>
-<p>As stated in the License, this code is provided as-is with absolutely no warranty. That said, I am always happy to receive comments, suggestions, pull requests or issues on GitHub, tho I cannot promise timely responses.</p>
+<p>As stated in the <a class="el" href="md__l_i_c_e_n_s_e.html">License</a>, this code is provided as-is with absolutely no warranty. That said, I am always happy to receive comments, suggestions, pull requests or issues on GitHub, tho I cannot promise timely responses.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 4. Why GLUCC?</h1>
 <p>There are plenty of other class libraries out there, why a new one?</p>
@@ -129,12 +129,13 @@ don't want to install 500Mb of Boost to get it", maybe GLUCC can help.</p>
 </p>
 <p>Sample use: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> print_hex(<span class="keywordtype">int</span> i)</div>
 <div class="line">{</div>
-<div class="line">    glucc::format_guard g{ std::cout };</div>
+<div class="line">    <a class="code hl_class" href="classglucc_1_1format__guard.html">glucc::format_guard</a> g{ std::cout };</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; std::hex() &lt;&lt; std::set_fill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(8) &lt;&lt; i;</div>
 <div class="line">    <span class="comment">// Confusingly, the next line would produce &quot;f&quot; because hex() is sticky but setw() is not!</span></div>
 <div class="line">    <span class="comment">// std::cout &lt;&lt; 15;</span></div>
 <div class="line">} <span class="comment">// std::cout is reverted to previous integer formatting here</span></div>
+<div class="ttc" id="aclassglucc_1_1format__guard_html"><div class="ttname"><a href="classglucc_1_1format__guard.html">glucc::format_guard</a></div><div class="ttdoc">RAII guard for restoring IOStream formatting state.</div><div class="ttdef"><b>Definition:</b> format_guard.hpp:74</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 7. The Templates</h1>
 <h2><a class="anchor" id="autotoc_md9"></a>

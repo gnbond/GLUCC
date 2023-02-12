@@ -8,5 +8,6 @@
     ],
     "doxdocgen.file.fileOrder": [
         "file", "author", "email", "copyright"
-    ]
+    ],
+    "editor.formatOnSave": true
 }
