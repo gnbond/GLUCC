@@ -17,7 +17,7 @@ as required for Doxygen
 - [3. Support](#3-support)
 - [4. The Templates](#4-the-templates)
   - [4.1. format\_guard](#41-format_guard)
-  - [4.2. nullable\_function](#42-nullable_function)
+  - [4.2. optional\_function](#42-optional_function)
   - [4.3. dereference\_iterator](#43-dereference_iterator)
   - [4.4. rectangular](#44-rectangular)
 
@@ -60,7 +60,7 @@ An [RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii)
 helper that saves the IOStream formatting state then automatically reverts it on
 destruction.
 
-## 4.2. nullable_function
+## 4.2. optional_function
 
 A `std::function` wrapper that is safe to call even if empty
 

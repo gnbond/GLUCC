@@ -1,11 +1,11 @@
-#include "nullable_function.hpp"
-
 #include <catch2/catch_test_macros.hpp>
 
-using Int_Func = glucc::nullable_function<int()>;
-using Void_Func = glucc::nullable_function<void()>;
-using Int_Arg_Func = glucc::nullable_function<int(int)>;
-using Double_Args_Func = glucc::nullable_function<double(double, int)>;
+#include "optional_function.hpp"
+
+using Int_Func = glucc::optional_function<int()>;
+using Void_Func = glucc::optional_function<void()>;
+using Int_Arg_Func = glucc::optional_function<int(int)>;
+using Double_Args_Func = glucc::optional_function<double(double, int)>;
 
 static int ret_two() { return 2; }
 
@@ -27,7 +27,7 @@ struct Four {
     int m_val;
 };
 
-TEST_CASE("nullable_function Basic", "[nullable_function]") {
+TEST_CASE("optional_function Basic", "[optional_function]") {
     Int_Func f{};
 
     CHECK_FALSE(f);
@@ -53,7 +53,7 @@ TEST_CASE("nullable_function Basic", "[nullable_function]") {
     CHECK(f4() == 4);
 }
 
-TEST_CASE("nullable_function Void", "[nullable_function]") {
+TEST_CASE("optional_function Void", "[optional_function]") {
     Void_Func f{};
     CHECK_FALSE(f);
     f();  // This compiles and is safe
@@ -73,7 +73,7 @@ TEST_CASE("nullable_function Void", "[nullable_function]") {
     CHECK(val == 33);
 }
 
-TEST_CASE("nullable_function With Argument", "[nullable_function]") {
+TEST_CASE("optional_function With Argument", "[optional_function]") {
     Int_Arg_Func f{};
 
     CHECK_FALSE(f);
@@ -101,7 +101,7 @@ TEST_CASE("nullable_function With Argument", "[nullable_function]") {
     CHECK(f4(3) == 12);
 }
 
-TEST_CASE("nullable_function With Two Arguments", "[nullable_function]") {
+TEST_CASE("optional_function With Two Arguments", "[optional_function]") {
     Double_Args_Func f{};
 
     CHECK_FALSE(f);

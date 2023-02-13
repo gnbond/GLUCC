@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 project(GLUCC LANGUAGES CXX VERSION 1.0)
 
 set(HEADERS 
-    nullable_function.hpp
+    optional_function.hpp
     format_guard.hpp
 )
 

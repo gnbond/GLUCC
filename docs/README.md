@@ -8,7 +8,7 @@
 - [5. Code style](#5-code-style)
 - [6. The Templates](#6-the-templates)
   - [6.1. format\_guard](#61-format_guard)
-  - [6.2. nullable\_function](#62-nullable_function)
+  - [6.2. optional\_function](#62-optional_function)
   - [6.3. dereference\_iterator](#63-dereference_iterator)
   - [6.4. rectangular](#64-rectangular)
 - [7. Some other Useful C++ Classes](#7-some-other-useful-c-classes)
@@ -117,7 +117,7 @@ An [RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii)
 helper that saves the IOStream formatting state then automatically reverts it on
 destruction.
 
-## 6.2. nullable_function
+## 6.2. optional_function
 
 A `std::function` wrapper that is safe to call even if empty
 

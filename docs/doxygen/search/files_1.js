@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nullable_5ffunction_2ehpp_0',['nullable_function.hpp',['../nullable__function_8hpp.html',1,'']]]
+  ['optional_5ffunction_2ehpp_0',['optional_function.hpp',['../optional__function_8hpp.html',1,'']]]
 ];

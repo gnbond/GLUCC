@@ -1,8 +1,8 @@
 var indexSectionsWithContent =
 {
-  0: "fglno~",
-  1: "fn",
-  2: "fn",
+  0: "fglo~",
+  1: "fo",
+  2: "fo",
   3: "fo~",
   4: "gl"
 };

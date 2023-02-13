@@ -1,8 +1,8 @@
-#ifndef GLUCC_NULLABLE_FUNCTION_H
-#define GLUCC_NULLABLE_FUNCTION_H
+#ifndef GLUCC_OPTIONAL_FUNCTION_H
+#define GLUCC_OPTIONAL_FUNCTION_H
 
 /**
- * @file nullable_function.hpp
+ * @file optional_function.hpp
  * @author Gregory Bond (greg@bond.id.au)
  * @copyright This file is in the public domain.  See <https://unlicense.org>
  *
@@ -40,32 +40,32 @@ namespace glucc {
  * Such errors can be very hard to find and are likely to escape testing into
  * deployed code.
  *
- * `nullable_function` automates this test, so removing it from the application
+ * `optional_function` automates this test, so removing it from the application
  * code and ensuring that _empty_ function objects never throw exceptions
  * (though the wrapped function may still throw, of course):
  * ```
- * glucc::nullable_function<void()> m_func{};
+ * glucc::optional_function<void()> m_func{};
  * // ...
  * m_func();  // Always safe
  * ```
  *
  * If the function type returns a non-void type, then an empty
- * `nullable_function` will return a default-constructed value of that type.
+ * `optional_function` will return a default-constructed value of that type.
  *
  * The base template is incomplete and should not be used.  Template Partial
  * Specialisation will choose the correct code based on the function type.  If
  * you get errors such  as this:
  * ```
  * file.cpp:132:32: error: implicit instantiation of undefined template
- * 'glucc::nullable_function<int>'
+ * 'glucc::optional_function<int>'
  * ```
- * this likely means you are instantiating `nullable_function` with a type that
+ * this likely means you are instantiating `optional_function` with a type that
  * is not a function type.
  *
  * @tparam Func Function type to wrap, e.g. `double(int, double)`
  */
 template <typename Func>
-struct nullable_function;  // Error here means Func is not a function type
+struct optional_function;  // Error here means Func is not a function type
 
 /**
  * @brief Wrap a non-void function
@@ -74,11 +74,11 @@ struct nullable_function;  // Error here means Func is not a function type
  * @tparam Args... Varadic function argument types
  */
 template <typename Ret, typename... Args>
-struct nullable_function<Ret(Args...)> : public std::function<Ret(Args...)> {
+struct optional_function<Ret(Args...)> : public std::function<Ret(Args...)> {
     /**
      * @brief Invoke the wrapped function
      *
-     * If the nullable_function is _empty_, returns `Ret{}`.  Otherwise returns
+     * If the optional_function is _empty_, returns `Ret{}`.  Otherwise returns
      * the result from from invoking the function.
      *
      * @param args Varadic function arguments
@@ -99,11 +99,11 @@ struct nullable_function<Ret(Args...)> : public std::function<Ret(Args...)> {
  * @tparam Args... Varadic function argument types
  */
 template <typename... Args>
-struct nullable_function<void(Args...)> : public std::function<void(Args...)> {
+struct optional_function<void(Args...)> : public std::function<void(Args...)> {
     /**
      * @brief Invoke the wrapped function
      *
-     * If the nullable_function is _empty_, then this is a no-op.
+     * If the optional_function is _empty_, then this is a no-op.
      *
      * @param args Varadic function arguments
      */
@@ -116,4 +116,4 @@ struct nullable_function<void(Args...)> : public std::function<void(Args...)> {
 };
 
 }  // namespace glucc
-#endif  //  GLUCC_NULLABLE_FUNCTION_H
+#endif  //  GLUCC_OPTIONAL_FUNCTION_H

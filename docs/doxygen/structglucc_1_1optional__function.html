@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GLUCC: glucc::nullable_function&lt; Func &gt; Struct Template Reference</title>
+<title>GLUCC: glucc::optional_function&lt; Func &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,19 +69,19 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>glucc</b></li><li class="navelem"><a class="el" href="structglucc_1_1nullable__function.html">nullable_function</a></li>  </ul>
+<li class="navelem"><b>glucc</b></li><li class="navelem"><a class="el" href="structglucc_1_1optional__function.html">optional_function</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">glucc::nullable_function&lt; Func &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">glucc::optional_function&lt; Func &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Wrapper for <code>std::function</code> that can be safely left empty.  
- <a href="structglucc_1_1nullable__function.html#details">More...</a></p>
+ <a href="structglucc_1_1optional__function.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Func&gt;<br />
-struct glucc::nullable_function&lt; Func &gt;</div><p>Wrapper for <code>std::function</code> that can be safely left empty. </p>
+struct glucc::optional_function&lt; Func &gt;</div><p>Wrapper for <code>std::function</code> that can be safely left empty. </p>
 <p>The <a href="https://en.cppreference.com/w/cpp/utility/functional/function"><code>std::function</code></a> template is extremely useful but has one annoying feature when used in some designs. A <code>std::function</code> can be <em>empty</em>, and default-constructed objects are created as <em>empty</em>. An <em>empty</em> std::function is more or less equivalent to a null pointer, and will throw an exception if dereferenced.</p>
 <p>So for designs where the function is optional (such as when used for a callback), the code is full of constructs like </p><div class="fragment"><div class="line">std::function&lt;void()&gt; m_func{};</div>
 <div class="line"><span class="comment">// ...</span></div>
@@ -90,14 +90,14 @@ struct glucc::nullable_function&lt; Func &gt;</div><p>Wrapper for <code>std::fun
 <div class="line">     m_func();</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> and you risk exceptions if you forget to add this check on some code paths. Such errors can be very hard to find and are likely to escape testing into deployed code.</p>
-<p><code><a class="el" href="structglucc_1_1nullable__function.html" title="Wrapper for std::function that can be safely left empty.">nullable_function</a></code> automates this test, so removing it from the application code and ensuring that <em>empty</em> function objects never throw exceptions (though the wrapped function may still throw, of course): </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structglucc_1_1nullable__function.html">glucc::nullable_function</a>&lt;void()&gt; m_func{};</div>
+<p><code><a class="el" href="structglucc_1_1optional__function.html" title="Wrapper for std::function that can be safely left empty.">optional_function</a></code> automates this test, so removing it from the application code and ensuring that <em>empty</em> function objects never throw exceptions (though the wrapped function may still throw, of course): </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structglucc_1_1optional__function.html">glucc::optional_function</a>&lt;void()&gt; m_func{};</div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line">m_func();  <span class="comment">// Always safe</span></div>
-<div class="ttc" id="astructglucc_1_1nullable__function_html"><div class="ttname"><a href="structglucc_1_1nullable__function.html">glucc::nullable_function</a></div><div class="ttdoc">Wrapper for std::function that can be safely left empty.</div><div class="ttdef"><b>Definition:</b> nullable_function.hpp:68</div></div>
-</div><!-- fragment --><p>If the function type returns a non-void type, then an empty <code><a class="el" href="structglucc_1_1nullable__function.html" title="Wrapper for std::function that can be safely left empty.">nullable_function</a></code> will return a default-constructed value of that type.</p>
+<div class="ttc" id="astructglucc_1_1optional__function_html"><div class="ttname"><a href="structglucc_1_1optional__function.html">glucc::optional_function</a></div><div class="ttdoc">Wrapper for std::function that can be safely left empty.</div><div class="ttdef"><b>Definition:</b> optional_function.hpp:68</div></div>
+</div><!-- fragment --><p>If the function type returns a non-void type, then an empty <code><a class="el" href="structglucc_1_1optional__function.html" title="Wrapper for std::function that can be safely left empty.">optional_function</a></code> will return a default-constructed value of that type.</p>
 <p>The base template is incomplete and should not be used. Template Partial Specialisation will choose the correct code based on the function type. If you get errors such as this: </p><div class="fragment"><div class="line">file.cpp:132:32: error: implicit instantiation of undefined <span class="keyword">template</span></div>
-<div class="line"><span class="stringliteral">&#39;glucc::nullable_function&lt;int&gt;&#39;</span></div>
-</div><!-- fragment --><p> this likely means you are instantiating <code><a class="el" href="structglucc_1_1nullable__function.html" title="Wrapper for std::function that can be safely left empty.">nullable_function</a></code> with a type that is not a function type.</p>
+<div class="line"><span class="stringliteral">&#39;glucc::optional_function&lt;int&gt;&#39;</span></div>
+</div><!-- fragment --><p> this likely means you are instantiating <code><a class="el" href="structglucc_1_1optional__function.html" title="Wrapper for std::function that can be safely left empty.">optional_function</a></code> with a type that is not a function type.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Func</td><td>Function type to wrap, e.g. <code>double(int, double)</code> </td></tr>
@@ -105,7 +105,7 @@ struct glucc::nullable_function&lt; Func &gt;</div><p>Wrapper for <code>std::fun
   </dd>
 </dl>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="nullable__function_8hpp_source.html">nullable_function.hpp</a></li>
+<li><a class="el" href="optional__function_8hpp_source.html">optional_function.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
