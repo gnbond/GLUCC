@@ -18,6 +18,7 @@ include(Catch)
 set(TEST_FILES
     test_optional_function.cpp
     test_format_guard.cpp
+    test_packer.cpp
 )
 
 add_executable(UnitTests ${TEST_FILES} )

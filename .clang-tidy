@@ -1,1 +1,2 @@
-Checks: 'bugprone-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type'
+# packer.hpp has to support C arrays
+Checks: 'bugprone-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type,-modernize-avoid-c-arrays,-cppcoreguidelines-avoid-c-arrays'

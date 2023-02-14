@@ -7,6 +7,7 @@ project(GLUCC LANGUAGES CXX VERSION 1.0)
 set(HEADERS 
     optional_function.hpp
     format_guard.hpp
+    packer.hpp
 )
 
 find_package(Doxygen)

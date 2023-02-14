@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7eformat_5fguard_0',['~format_guard',['../classglucc_1_1format__guard.html#a4dc222192d632aa98fd41b851c345279',1,'glucc::format_guard']]]
+  ['packer_0',['packer',['../classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e',1,'kerry::packer::packer()=default'],['../classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782',1,'kerry::packer::packer(std::size_t size)']]]
 ];

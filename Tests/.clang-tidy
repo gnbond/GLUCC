@@ -1,3 +1,4 @@
 InheritParentConfig: true
 # unit tests have lots of random values
+# and we need to test the functions of char arrays
 Checks: '-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers'
