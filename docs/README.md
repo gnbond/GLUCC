@@ -9,11 +9,15 @@
 - [6. The Templates](#6-the-templates)
   - [6.1. format\_guard](#61-format_guard)
   - [6.2. optional\_function](#62-optional_function)
-  - [6.3. dereference\_iterator](#63-dereference_iterator)
-  - [6.4. rectangular](#64-rectangular)
-- [7. Some other Useful C++ Classes](#7-some-other-useful-c-classes)
-  - [7.1. KissNet](#71-kissnet)
-  - [7.2. CRC++](#72-crc)
+  - [6.3. is\_insertable\_into](#63-is_insertable_into)
+  - [6.4. dereference\_iterator](#64-dereference_iterator)
+  - [6.5. rectangular](#65-rectangular)
+- [7. The Classes](#7-the-classes)
+  - [7.1. kerry::packer](#71-kerrypacker)
+  - [7.2. james::unpacker](#72-jamesunpacker)
+- [8. Some other Useful C++ Classes](#8-some-other-useful-c-classes)
+  - [8.1. KissNet](#81-kissnet)
+  - [8.2. CRC++](#82-crc)
 
 
 # 1. Introduction
@@ -34,7 +38,7 @@ not required to use any of these classes in your project.
 
 # 2. Documentation
 
-  Doxygen-generated API is in the [here](doxygen/index.html).
+  Doxygen-generated API is in [here](doxygen/index.html).
 
 # 3. Support
 
@@ -109,37 +113,63 @@ means Configure takes a while, and the first build also takes a while as the
 Catch2 code is compiled, but after that building and running unit tests is very
 fast (much faster than the single-header version of Catch2 2.x).
 
+<!-- 
+These section headers uses links into Doxygen-generated HTML.
+This may or may not be stable, some posts on StackOverflow suggest 
+the name of the HTML files should be fairly static, but its not 
+guaranteed by Doxygen.
+-->
 # 6. The Templates
 
-## 6.1. format_guard
+## 6.1. [format_guard](doxygen/classglucc_1_1format__guard.html)
 
 An [RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii)
 helper that saves the IOStream formatting state then automatically reverts it on
 destruction.
 
-## 6.2. optional_function
+## 6.2. [optional_function](doxygen/structglucc_1_1optional__function.html)
 
 A `std::function` wrapper that is safe to call even if empty
 
-## 6.3. dereference_iterator
+## 6.3. [is_insertable_into](doxygen/structglucc_1_1is__insertable__into.html)
 
-## 6.4. rectangular
+A type trait to detect if a type `T` is insertable into an iostreams-like stream
+`S`.  This demonstrates some useful Template Meta-Programming techniques that can
+be simply adapted to implement a wide variety of type traits.
 
-# 7. Some other Useful C++ Classes
+## 6.4. dereference_iterator
+
+## 6.5. rectangular
+
+# 7. The Classes
+
+## 7.1. [kerry::packer](doxygen/classkerry_1_1packer.html)
+
+Construct binary protocol packets in C++ style, without needing `memcpy()` or unsafe pointer casts.  Still a work in progress.
+
+## 7.2. james::unpacker
+
+Unpack binary protocol packet in C++ style.  TBD.
+
+# 8. Some other Useful C++ Classes
 
 The following are not part of GLUCC, but have similar philosophy - small,
 targeted, mostly-standalone modules on modern C++ that can be easily copied into
-an existing project.
+an existing project with minimal dependencies.
 
 These projects are quite independent of (and probably completely unaware of)
 GLUCC.  Listing here should not imply any form of endorsement of GLUCC by those
 projects.
 
-## 7.1. KissNet
+## 8.1. KissNet
 
-[KissNet](https://github.com/Ybalrid/kissnet) is a single-header standalone wrapper to make the C socket API easily and naturally available to C++ code.  Supports UDP, TCP and SSL, both clients and servers.  Also supports (spit) Windows.  MIT license.
+[KissNet](https://github.com/Ybalrid/kissnet) is a single-header standalone
+wrapper to make the C socket API easily and naturally available to C++ code.
+Supports UDP, TCP and SSL, both clients and servers.  Also supports (spit)
+Windows.  MIT license.  kerry::packer and james::unpacker have been designed (in
+part) to work well with KissNet.
 
-## 7.2. CRC++
+## 8.2. CRC++
 
 [CRC++](https://github.com/d-bahr/CRCpp) is a single-header solution for fast
 calculation of all manner of CRCs (40+ CRC polynomials included, from 6 to 64

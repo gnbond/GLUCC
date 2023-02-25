@@ -102,6 +102,18 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</td
 <tr class="memitem:abcd10526d48b5341c0d6f02355b576ee"><td class="memItemLeft" align="right" valign="top"><a id="abcd10526d48b5341c0d6f02355b576ee" name="abcd10526d48b5341c0d6f02355b576ee"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> () const</td></tr>
 <tr class="separator:abcd10526d48b5341c0d6f02355b576ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6d71eb5a366865cd77486f5d82508bb"><td class="memItemLeft" align="right" valign="top"><a id="ac6d71eb5a366865cd77486f5d82508bb" name="ac6d71eb5a366865cd77486f5d82508bb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator const void *</b> ()</td></tr>
+<tr class="separator:ac6d71eb5a366865cd77486f5d82508bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ab23ab7c7d0788daa3fd35c0778b1f"><td class="memItemLeft" align="right" valign="top"><a id="af0ab23ab7c7d0788daa3fd35c0778b1f" name="af0ab23ab7c7d0788daa3fd35c0778b1f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator const std::byte *</b> ()</td></tr>
+<tr class="separator:af0ab23ab7c7d0788daa3fd35c0778b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f8b6203d8c300ad100a86793567daaa"><td class="memItemLeft" align="right" valign="top"><a id="a7f8b6203d8c300ad100a86793567daaa" name="a7f8b6203d8c300ad100a86793567daaa"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator const char *</b> ()</td></tr>
+<tr class="separator:a7f8b6203d8c300ad100a86793567daaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a745bc6a4030f395195f5166f98f0f4d9"><td class="memItemLeft" align="right" valign="top"><a id="a745bc6a4030f395195f5166f98f0f4d9" name="a745bc6a4030f395195f5166f98f0f4d9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator const unsigned char *</b> ()</td></tr>
+<tr class="separator:a745bc6a4030f395195f5166f98f0f4d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6b4d0d86b4632ea2bc642110d5346b"><td class="memItemLeft" align="right" valign="top"><a id="a0e6b4d0d86b4632ea2bc642110d5346b" name="a0e6b4d0d86b4632ea2bc642110d5346b"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> () const</td></tr>
 <tr class="separator:a0e6b4d0d86b4632ea2bc642110d5346b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,6 +126,9 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</t
 <tr class="memitem:ac42f0905fbf04e0fd0f2d3260c95b2a1"><td class="memItemLeft" align="right" valign="top"><a id="ac42f0905fbf04e0fd0f2d3260c95b2a1" name="ac42f0905fbf04e0fd0f2d3260c95b2a1"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
 <tr class="separator:ac42f0905fbf04e0fd0f2d3260c95b2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a88f64e85f8580b5777cc8fa7263273"><td class="memItemLeft" align="right" valign="top"><a id="a6a88f64e85f8580b5777cc8fa7263273" name="a6a88f64e85f8580b5777cc8fa7263273"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
+<tr class="separator:a6a88f64e85f8580b5777cc8fa7263273"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c9e2fab7c02e71f4e48bada213f3824"><td class="memTemplParams" colspan="2"><a id="a7c9e2fab7c02e71f4e48bada213f3824" name="a7c9e2fab7c02e71f4e48bada213f3824"></a>
 template&lt;typename C &gt; </td></tr>
 <tr class="memitem:a7c9e2fab7c02e71f4e48bada213f3824"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const C &amp;rhs)</td></tr>
@@ -148,14 +163,45 @@ template&lt;typename B , std::size_t N&gt; </td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Pack data into a network packet in a C++ manner. </p>
-<p>Dealing with binary network packets hasn't really changed in 40 years - it's still usually C code, and usually a horrible mix of type punning, unsafe pointer casts, and calls to <code>htonl()</code> and <code>memcpy()</code>, all written with silent prayers that the new 64-bit compiler version won't add invisible padding bytes to your structs.</p>
+<p>Dealing with binary protocol packets hasn't really changed in 40 years - it's still usually C code, and usually a horrible mix of type punning, unsafe pointer casts, and calls to <code>htonl()</code> and <code>memcpy()</code>, all written with silent prayers that the new 64-bit compiler version won't add invisible padding bytes to your structs.</p>
 <p>Then you run a static analyzer over your code, and have to silence hundreds of warnings about all those unsafe 40-year-old coding practices.</p>
 <p>There's gotta be a better way. A C++ way.</p>
 <p>Well, now there is.</p>
-<p><a class="el" href="classkerry_1_1packer.html" title="Pack data into a network packet in a C++ manner.">kerry::packer</a> uses an API inspired by C++ iostreams inserters that is extensible and type-safe. It wraps <code>std::vector&lt;std::byte&gt;</code> to store the generated packet data. It provides inserters for 1/2/4-byte integral types (converting to network byte order as required). It provides inserters for fixed-size (C-style) arrays of integral types.</p>
+<p><a class="el" href="classkerry_1_1packer.html" title="Pack data into a network packet in a C++ manner.">kerry::packer</a> uses an API inspired by C++ iostreams inserters that is extensible and type-safe. It wraps <code>std::vector&lt;std::byte&gt;</code> to store the generated packet data. It provides inserters for 1/2/4-byte integral types (converting to network byte order as required). It provides inserters for fixed-size (C-style) arrays of supported types, including arrays of custom types with user-written inserters.</p>
 <p>The packer can be created in two modes. The default-constructed packer is suitable for variable-sized network packets, leaving the calling code to be responsible for checking the size of the generated packet matches expectation, if that is required. A packer created with a size argument is suitable for fixed-size network packets, and the packer will check that the generated packet is exactly that many bytes (by throwing an exception when the data is extracted if the size is not exactly correct).</p>
-<p>What's with the namespace? This is a little pun that should raise a smile from anyone familiar with the last 40 years of Australian media or political affairs. Or the history of cricket in the late 20th century.</p>
-<p>TBD: member documentation TBD: example usage </p>
+<p>Another annoyance is the inconsistencies with the types used to store binary packets and the standard functions used to manipulate those packets. The packer uses std::byte as the native type (this use-case seems to be the main intention of the std::byte type) but allows implicit conversions to <code>void*</code>, <code>char*</code> and <code>unsigned char*</code>. So the following code is typical: </p><div class="fragment"><div class="line"><a class="code hl_class" href="classkerry_1_1packer.html">packer</a> p;</div>
+<div class="line"><span class="keywordtype">int</span> sock = socket(...);</div>
+<div class="line"><span class="comment">//...</span></div>
+<div class="line">p &lt;&lt; some &lt;&lt; data;</div>
+<div class="line">send(sock, p, p.size(), 0)</div>
+<div class="ttc" id="aclasskerry_1_1packer_html"><div class="ttname"><a href="classkerry_1_1packer.html">kerry::packer</a></div><div class="ttdoc">Pack data into a network packet in a C++ manner.</div><div class="ttdef"><b>Definition:</b> packer.hpp:109</div></div>
+</div><!-- fragment --><p>A somewhat contrived example: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>item { uint8_t tag; uint16_t value; }</div>
+<div class="line"><span class="keyword">struct </span>item_packet { uint8_t count; item items[4]; uint32_t checksum; }</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(<a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; p, <span class="keyword">const</span> item&amp; i) {</div>
+<div class="line">    <span class="keywordflow">return</span> p &lt;&lt; i.count &lt;&lt; i.value;</div>
+<div class="line">}</div>
+<div class="line"><a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(<a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; p, <span class="keyword">const</span> item_packet&amp; ip) {</div>
+<div class="line">    <span class="keywordflow">return</span> p &lt;&lt; ip.count &lt;&lt; ip.items &lt;&lt; ip.checksum;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// ...</span></div>
+<div class="line"> </div>
+<div class="line">send(<span class="keywordtype">int</span> sock, <span class="keyword">const</span> item_packet&amp; ip) {</div>
+<div class="line">    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a> p{17};</div>
+<div class="line">    p &lt;&lt; ip;</div>
+<div class="line">    <span class="keywordflow">if</span> (send(sock, p, p.size()) &lt; 0) {</div>
+<div class="line">        <span class="comment">// handle error</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclasskerry_1_1packer_html_ac8f1dc30ff0fc8f7a3f431d4c034f49e"><div class="ttname"><a href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">kerry::packer::packer</a></div><div class="ttdeci">packer()=default</div><div class="ttdoc">Construct a new packer object with variable size.</div></div>
+</div><!-- fragment --><p> What's with the namespace? This is a little pun that should raise a smile from anyone familiar with the last 40 years of Australian media or political affairs. Or the history of cricket in the late 20th century.</p>
+<p>TBD:</p><ul>
+<li>member documentation</li>
+<li>example usage</li>
+<li>consider binary blobs. make copy() public?</li>
+<li>support other containers of packable types? (std::array, std::vector? iterators? ) </li>
+</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac8f1dc30ff0fc8f7a3f431d4c034f49e" name="ac8f1dc30ff0fc8f7a3f431d4c034f49e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac8f1dc30ff0fc8f7a3f431d4c034f49e">&#9670;&#160;</a></span>packer() <span class="overload">[1/2]</span></h2>
