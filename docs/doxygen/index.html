@@ -79,8 +79,13 @@ $(function() {
 <li class="level1"><a href="#autotoc_md3">3. Support</a></li>
 <li class="level1"><a href="#autotoc_md4">4. The Templates</a><ul><li class="level2"><a href="#autotoc_md5">4.1. format_guard</a></li>
 <li class="level2"><a href="#autotoc_md6">4.2. optional_function</a></li>
-<li class="level2"><a href="#autotoc_md7">4.3. dereference_iterator</a></li>
-<li class="level2"><a href="#autotoc_md8">4.4. rectangular</a></li>
+<li class="level2"><a href="#autotoc_md7">4.3. is_insertable_into</a></li>
+<li class="level2"><a href="#autotoc_md8">4.4. dereference_iterator</a></li>
+<li class="level2"><a href="#autotoc_md9">4.5. rectangular</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#autotoc_md10">5. The Classes</a><ul><li class="level2"><a href="#autotoc_md11">5.1. kerry::packer</a></li>
+<li class="level2"><a href="#autotoc_md12">5.2. james::unpacker</a></li>
 </ul>
 </li>
 </ul>
@@ -109,9 +114,22 @@ GLUCC - Greg's List of Useful C++ Classes</h1>
 4.2. optional_function</h2>
 <p>A <code>std::function</code> wrapper that is safe to call even if empty</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
-4.3. dereference_iterator</h2>
+4.3. is_insertable_into</h2>
+<p>A type trait to detect if a type <code>T</code> is insertable into an iostreams-like stream <code>S</code>. This demonstrates some useful Template Meta-Programming techniques that can be simply adapted to implement a wide variety of type traits.</p>
 <h2><a class="anchor" id="autotoc_md8"></a>
-4.4. rectangular</h2>
+4.4. dereference_iterator</h2>
+<p>TBD</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+4.5. rectangular</h2>
+<p>TBD</p>
+<h1><a class="anchor" id="autotoc_md10"></a>
+5. The Classes</h1>
+<h2><a class="anchor" id="autotoc_md11"></a>
+5.1. kerry::packer</h2>
+<p>Construct binary protocol packets in C++ style, without needing <code>memcpy()</code> or unsafe pointer casts. Still a work in progress.</p>
+<h2><a class="anchor" id="autotoc_md12"></a>
+5.2. james::unpacker</h2>
+<p>Unpack binary protocol packet in C++ style. TBD. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

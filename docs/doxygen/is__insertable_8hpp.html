@@ -81,21 +81,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structglucc_1_1details_1_1helper.html">glucc::details::helper&lt; T, S, U &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template.  <a href="structglucc_1_1details_1_1helper.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structglucc_1_1is__insertable__into.html">glucc::is_insertable_into&lt; T, S, U &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template.  <a href="structglucc_1_1is__insertable__into.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structglucc_1_1details_1_1helper_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1declva2d118be559bc6d79d49647c57da699ae.html">glucc::details::helper&lt; T, S, std::void_t&lt; decltype(std::declval&lt; S &gt;()&lt;&lt; std::declval&lt; T &gt;()), std::enable_if_t&lt;!std::is_integral_v&lt; S &gt; &gt; &gt; &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This specialization for the true case.  <a href="structglucc_1_1details_1_1helper_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1declva2d118be559bc6d79d49647c57da699ae.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structglucc_1_1is__insertable__into.html">glucc::is_insertable_into&lt; T, S &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is an expression of type T insertable into a stream of type S?  <a href="structglucc_1_1is__insertable__into.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structglucc_1_1is__insertable__into_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1dec60f1d59155f95e1cfabdaa7c6d6e8e35.html">glucc::is_insertable_into&lt; T, S, std::void_t&lt; decltype(std::declval&lt; S &gt;()&lt;&lt; std::declval&lt; T &gt;()), std::enable_if_t&lt;!std::is_integral_v&lt; S &gt; &gt; &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This specialization for the true case.  <a href="structglucc_1_1is__insertable__into_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1dec60f1d59155f95e1cfabdaa7c6d6e8e35.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a1965f6f9ff9ef7d2bfb02826c45dd8e3"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S &gt; </td></tr>
 <tr class="memitem:a1965f6f9ff9ef7d2bfb02826c45dd8e3"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3">glucc::is_insertable_into_v</a> = is_insertable_into&lt;T, S&gt;::value</td></tr>
-<tr class="memdesc:a1965f6f9ff9ef7d2bfb02826c45dd8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper variable template.  <br /></td></tr>
+<tr class="memdesc:a1965f6f9ff9ef7d2bfb02826c45dd8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper variable template Is a value of type T insertable into a stream of type S?  <br /></td></tr>
 <tr class="separator:a1965f6f9ff9ef7d2bfb02826c45dd8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -126,7 +123,7 @@ template&lt;typename T , typename S &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Helper variable template. </p>
+<p>Helper variable template Is a value of type T insertable into a stream of type S? </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type of the expression to insert </td></tr>

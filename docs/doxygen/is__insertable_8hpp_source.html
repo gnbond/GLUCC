@@ -77,66 +77,66 @@ $(function() {
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>glucc {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>details {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S, <span class="keyword">typename</span> U = <span class="keywordtype">void</span>&gt;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="structglucc_1_1details_1_1helper.html">   33</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structglucc_1_1details_1_1helper.html">helper</a> : std::false_type {};</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">/*</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment"> * Older Clang versions (in particular, the clang version in MacOs XCode 10.x)</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment"> * have a bug that means the usual C++17 idiom using decltype() and std::void_t</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"> * does not work correctly.  We detect that here and use an alternate idiom for</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"> * those compilers.</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#if defined(__APPLE__) &amp;&amp; defined(__clang_major__) &amp;&amp; __clang_major__ &lt;= 10</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#define BROKEN_DECLTYPE</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#ifdef BROKEN_DECLTYPE</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">/*</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment"></span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">On these compilers, `decltype(std::declval&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;())` fails</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">(SFINAE does not correctly propagate up to the template specialization so the</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">resulting trait gives false positives). It works if the `std::declval&lt;S&gt;()` is</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment">replaced by either an actual variable (`std::cout` or even `S{}`), but this</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment">limits the trait to S types that are default-constructable.</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment"></span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">As a non-idiomatic work-around, we declare (but do not define) a function to</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">return `S&amp;` and use that in `decltype()`.  This is more-or-less equivalent to</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">`std::declval&lt;S&gt;()` but does not trigger the bug in XCode-10 clang.</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment">*/</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>S&amp; S_func();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">struct </span><a class="code hl_struct" href="structglucc_1_1details_1_1helper.html">helper</a>&lt;T, S,</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>              std::void_t&lt;decltype(S_func&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;()),</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                          std::enable_if_t&lt;!std::is_integral_v&lt;S&gt;&gt;&gt;&gt;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    : std::true_type {};</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>#else</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>template &lt;typename T, typename S&gt;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="structglucc_1_1details_1_1helper_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1declva2d118be559bc6d79d49647c57da699ae.html">   91</a></span>struct helper&lt;T, S,</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>              std::void_t&lt;decltype(std::declval&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;()),</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                          std::enable_if_t&lt;!std::is_integral_v&lt;S&gt;&gt;&gt;&gt;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    : std::true_type {};</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>#endif</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}  <span class="comment">// namespace details</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>template &lt;typename T, typename S&gt;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="structglucc_1_1is__insertable__into.html">  107</a></span>struct is_insertable_into : details::helper&lt;T, S&gt; {};</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>template &lt;typename T, typename S&gt;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3">  116</a></span>constexpr bool is_insertable_into_v = is_insertable_into&lt;T, S&gt;::value;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}  <span class="comment">// namespace glucc</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>#endif  <span class="comment">//  GLUCC_IS_INSERTABLE_H</span></div>
-<div class="ttc" id="astructglucc_1_1details_1_1helper_html"><div class="ttname"><a href="structglucc_1_1details_1_1helper.html">glucc::details::helper</a></div><div class="ttdoc">Base template.</div><div class="ttdef"><b>Definition:</b> is_insertable.hpp:33</div></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> * Older MacOS versions (in particular, the clang version in MacOs XCode 10</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment"> * which is the latest supported on OsX 10.13) have a bug that means the usual</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * C++17 SFINAE idiom using declval&lt;&gt;(), decltype() and std::void_t does not</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * work correctly.  We detect that here and use an alternate idiom for those</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * compilers.  The ugly #define is injected by the XCode version, we assume</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * XCode 11 for OsX 10.14 and beyond are OK, but I can&#39;t test that.</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * On these systems, `decltype(std::declval&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;())` does not</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * work as expected (SFINAE does not correctly propagate up to the template</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * specialization so the resulting trait gives false positives). It works if the</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * `std::declval&lt;S&gt;()` is replaced by either an actual variable (`std::cout` or</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * even `S{}`), but this limits the trait to S types that are</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * default-constructable.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment"> * The problem appears to be related to XCode version or possibly OS version, as</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"> * installing a clang-11 from Homebrew fails to fix the problem.</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#if defined(__APPLE__) &amp;&amp; defined(__clang__) &amp;&amp; \</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">    __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ &lt;= 101300</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#define BROKEN_DECLTYPE</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">namespace </span>glucc {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S, <span class="keyword">typename</span> U = <span class="keywordtype">void</span>&gt;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structglucc_1_1is__insertable__into.html">   54</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structglucc_1_1is__insertable__into.html">is_insertable_into</a> : std::false_type {};</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#ifndef BROKEN_DECLTYPE</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="structglucc_1_1is__insertable__into_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1dec60f1d59155f95e1cfabdaa7c6d6e8e35.html">   82</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structglucc_1_1is__insertable__into.html">is_insertable_into</a>&lt;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    T, S,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    std::void_t&lt;decltype(std::declval&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;()),</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                std::enable_if_t&lt;!std::is_integral_v&lt;S&gt;&gt;&gt;&gt; : std::true_type {};</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>#else</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment">As a non-idiomatic work-around, we declare (but do not define) a function to</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">return `S&amp;` and use that in `decltype()`.  This is more-or-less equivalent to</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">`std::declval&lt;S&gt;()` but does not trigger the bug in XCode-10 clang.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>template &lt;typename S&gt;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>S&amp; S_func();</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>template &lt;typename T, typename S&gt;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>struct is_insertable_into&lt;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    T, S,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    std::void_t&lt;decltype(S_func&lt;S&gt;() &lt;&lt; std::declval&lt;T&gt;()),</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                std::enable_if_t&lt;!std::is_integral_v&lt;S&gt;&gt;&gt;&gt; : std::true_type {};</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>#endif</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>template &lt;typename T, typename S&gt;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3">  113</a></span>constexpr bool is_insertable_into_v = is_insertable_into&lt;T, S&gt;::value;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}  <span class="comment">// namespace glucc</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>#endif  <span class="comment">//  GLUCC_IS_INSERTABLE_H</span></div>
+<div class="ttc" id="astructglucc_1_1is__insertable__into_html"><div class="ttname"><a href="structglucc_1_1is__insertable__into.html">glucc::is_insertable_into</a></div><div class="ttdoc">Base template.</div><div class="ttdef"><b>Definition:</b> is_insertable.hpp:54</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
