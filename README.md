@@ -18,8 +18,12 @@ as required for Doxygen
 - [4. The Templates](#4-the-templates)
   - [4.1. format\_guard](#41-format_guard)
   - [4.2. optional\_function](#42-optional_function)
-  - [4.3. dereference\_iterator](#43-dereference_iterator)
-  - [4.4. rectangular](#44-rectangular)
+  - [4.3. is\_insertable\_into](#43-is_insertable_into)
+  - [4.4. dereference\_iterator](#44-dereference_iterator)
+  - [4.5. rectangular](#45-rectangular)
+- [5. The Classes](#5-the-classes)
+  - [5.1. kerry::packer](#51-kerrypacker)
+  - [5.2. james::unpacker](#52-jamesunpacker)
 
 
 # 1. Introduction
@@ -62,8 +66,28 @@ destruction.
 
 ## 4.2. optional_function
 
-A `std::function` wrapper that is safe to call even if empty
+A `std::function` wrapper that is safe to call even if empty.
 
-## 4.3. dereference_iterator
+## 4.3. is_insertable_into
 
-## 4.4. rectangular
+A type trait to detect if a type `T` is insertable into an iostreams-like stream
+`S`.  This demonstrates some useful Template Meta-Programming techniques that can
+be simply adapted to implement a wide variety of type traits.
+
+## 4.4. dereference_iterator 
+
+TBD
+
+## 4.5. rectangular
+
+TBD
+
+# 5. The Classes
+
+## 5.1. kerry::packer
+
+Construct binary protocol packets in C++ style, without needing `memcpy()` or unsafe pointer casts.  Still a work in progress.
+
+## 5.2. james::unpacker
+
+Unpack binary protocol packet in C++ style.  TBD.

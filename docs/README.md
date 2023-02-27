@@ -145,7 +145,9 @@ be simply adapted to implement a wide variety of type traits.
 
 ## 7.1. [kerry::packer](doxygen/classkerry_1_1packer.html)
 
-Construct binary protocol packets in C++ style, without needing `memcpy()` or unsafe pointer casts.  Still a work in progress.
+Construct binary protocol packets in C++ style, without needing `memcpy()` or
+unsafe pointer casts.  Still a work in progress.  This currently requires
+`is_insertable.hpp` but that can be fixed with a quick cut and paste.
 
 ## 7.2. james::unpacker
 
