@@ -130,6 +130,13 @@ TEST_CASE("packer short array", "[packer]") {
     std::uint64_t arr[] = {1, -2};
     p << arr;
   */
+TEST_CASE("packer data() converters", "[packer]") {
+    packer p{};
+    const std::byte* bytep = p;
+    const char* cp = p;
+    const unsigned char* ucp = p;
+    const void* voidp = p;
+}
 
 TEST_CASE("packer size exception", "[packer]") {
     packer p{6};
@@ -146,20 +153,27 @@ TEST_CASE("packer size exception", "[packer]") {
     CHECK_THROWS_AS(p.data(), size_error);
 }
 
-struct Data {
-    char len{2};
-    short values[4] = {3, -2, 0, 0};
-    std::uint32_t checksum{0x12345678};
+// This one is from the documentation
+struct item {
+    uint8_t tag;
+    uint16_t value;
+};
+struct item_packet {
+    uint8_t count;
+    item items[4];
+    uint32_t checksum;
 };
 
-packer& operator<<(packer& p, const Data& data) {
-    return p << data.len << data.values << data.checksum;
+packer& operator<<(packer& p, const item& i) { return p << i.tag << i.value; }
+packer& operator<<(packer& p, const item_packet& ip) {
+    return p << ip.count << ip.items << ip.checksum;
 }
 
 TEST_CASE("packer arbitrary struct", "[packer]") {
     packer p{};
-    Data d;
+    item_packet d = {2, {{3, 5}, {4, 6}}, 0x33445566};
     p << d;
-    CHECK(p.size() == 13);
-    CHECK(p == result{2, 0, 3, 0xff, 0xfe, 0, 0, 0, 0, 0x12, 0x34, 0x56, 0x78});
+    CHECK(p.size() == 17);
+    CHECK(p == result{2, 3, 0, 5, 4, 0, 6, 0, 0, 0, 0, 0, 0, 0x33, 0x44, 0x55,
+                      0x66});
 }

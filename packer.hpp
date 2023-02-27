@@ -2,7 +2,7 @@
 #define KERRY_PACKER_H
 
 /**
- * @file packer.h
+ * @file packer.hpp
  * @author Gregory Bond (greg@bond.id.au)
  * @copyright This file is in the public domain.  See <https://unlicense.org>
  *
@@ -19,6 +19,8 @@
 #include <type_traits>
 #include <vector>
 
+#include "is_insertable.hpp"
+
 namespace kerry {
 
 /**
@@ -32,7 +34,7 @@ struct size_error : public std::length_error {
 /**
  @brief Pack data into a network packet in a C++ manner
 
- Dealing with binary network packets hasn't really changed in 40 years - it's
+ Dealing with binary protocol packets hasn't really changed in 40 years - it's
  still usually C code, and usually a horrible mix of type punning, unsafe
  pointer casts, and calls to `htonl()` and `memcpy()`, all written with silent
  prayers that the new 64-bit compiler version won't add invisible padding bytes
@@ -49,7 +51,8 @@ kerry::packer uses an API inspired by C++ iostreams inserters that is extensible
 and type-safe.  It wraps `std::vector<std::byte>` to store the generated packet
 data.  It provides inserters for 1/2/4-byte integral types (converting to
 network byte order as required).  It provides inserters for fixed-size (C-style)
-arrays of integral types.
+arrays of supported types, including arrays of custom types with user-written
+inserters.
 
 The packer can be created in two modes.  The default-constructed packer is
 suitable for variable-sized network packets, leaving the calling code to be
@@ -59,12 +62,51 @@ fixed-size network packets, and the packer will check that the generated packet
 is exactly that many bytes (by throwing an exception when the data is extracted
 if the size is not exactly correct).
 
+Another annoyance is the inconsistencies with the types used to store binary
+packets and the standard functions used to manipulate those packets.  The packer
+uses std::byte as the native type (this use-case seems to be the main intention
+of the std::byte type) but allows implicit conversions to `void*`, `char*` and
+`unsigned char*`.  So the following code is typical:
+```
+packer p;
+int sock = socket(...);
+//...
+p << some << data;
+send(sock, p, p.size(), 0)
+```
+
+A somewhat contrived example:
+```
+struct item { uint8_t tag; uint16_t value; }
+struct item_packet { uint8_t count; item items[4]; uint32_t checksum; }
+
+packer& operator<<(packer& p, const item& i) {
+    return p << i.count << i.value;
+}
+packer& operator<<(packer& p, const item_packet& ip) {
+    return p << ip.count << ip.items << ip.checksum;
+}
+
+// ...
+
+send(int sock, const item_packet& ip) {
+    packer p{17};
+    p << ip;
+    if (send(sock, p, p.size()) < 0) {
+        // handle error
+    }
+}
+```
 What's with the namespace?  This is a little pun that should raise a smile from
 anyone familiar with the last 40 years of Australian media or political affairs.
 Or the history of cricket in the late 20th century.
 
-TBD: member documentation
-TBD: example usage
+TBD:
+- member documentation
+- example usage
+- consider binary blobs.  make copy() public?
+- support other containers of packable types? (std::array, std::vector?
+iterators? )
  */
 class packer {
    public:
@@ -95,15 +137,40 @@ class packer {
         if (!m_target_size) m_data.reserve(size);
     }
 
+    /**
+     * @brief Return the cuurent size of the packed data, in bytes
+     *
+     * @return auto
+     */
     [[nodiscard]] auto size() const { return m_data.size(); }
+    /**
+     * @brief Return a pointer to the constructed packet
+     *
+     * This will throw size_error if the packer was created with a target size
+     * and there are not exactly that many bytes in the packet.
+     *
+     * @return const std::byte*
+     */
     [[nodiscard]] auto data() const {
         check_size();
         return m_data.data();
+    }
+    [[nodiscard]] operator const void*() { return data(); }
+    [[nodiscard]] operator const std::byte*() { return data(); }
+    [[nodiscard]] operator const char*() {
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        return reinterpret_cast<const char*>(data());
+    }
+    [[nodiscard]] operator const unsigned char*() {
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        return reinterpret_cast<const unsigned char*>(data());
     }
     [[nodiscard]] auto capacity() const { return m_data.capacity(); }
     [[nodiscard]] auto target_size() const { return m_target_size; }
     [[nodiscard]] auto begin() const { return m_data.begin(); }
     [[nodiscard]] auto end() const { return m_data.end(); }
+
+    void clear() { m_data.clear(); }
 
     template <typename C>
     bool operator==(const C& rhs) {
@@ -134,10 +201,32 @@ class packer {
         return *this;
     }
 
+    /**
+     * @brief Efficiently insert a C-style array of 1-byte integral types
+     *
+     * @tparam B a 1-byte integral type
+     * @tparam N Size of the array
+     * @return packer&
+     */
     template <typename B, std::size_t N>
     std::enable_if_t<std::is_integral_v<B> && sizeof(B) == 1, packer&>
     operator<<(const B (&b)[N]) {
         copy(&b, N);
+        return *this;
+    }
+
+    // Allow C-style arrays of any non-byte-sized type for which we already have
+    // an inserter.  This uses the details: so has to be a free function
+    // template, not a member. C-style arrays of byte-sized types are handled in
+    // the class definition above using a direct call to copy() for efficiency
+    template <typename T, std::size_t N>
+    std::enable_if_t<sizeof(T) >= 2 && glucc::is_insertable_into_v<T, packer>,
+                     packer&>
+    operator<<(const T (&b)[N]) {
+        const T* p = b;
+        for (int n = N; n > 0; --n, ++p) {
+            *this << *p;
+        }
         return *this;
     }
 
@@ -185,36 +274,6 @@ class packer {
         }
     }
 };
-
-// Hide some template meta-hackery here
-// This has to be after definition of packer because we are accessing
-// packer::operator<<()
-
-namespace details {
-
-// True if T has a defined inserter for packer
-template <typename T>
-constexpr bool is_insertable_v =
-    std::is_reference_v<decltype(std::declval<packer>().operator<<(
-        std::declval<T>()))>;
-
-// True if T has size > 1 and a defined inserter for packer
-template <typename T>
-constexpr bool is_nonbyte_insertable_v = sizeof(T) > 1 && is_insertable_v<T>;
-
-}  // namespace details
-
-// Allow C-style arrays of any non-byte-sized type for which we already have an
-// inserter.  This uses the details: so has to be a free function template, not
-// a member. C-style arrays of byte-sized types are handled in the class
-// definition above using a direct call to copy() for efficiency
-template <typename B, std::size_t N>
-std::enable_if_t<details::is_nonbyte_insertable_v<B>, packer&> operator<<(
-    packer& out, const B (&b)[N]) {
-    const B* p = b;
-    for (int n = N; n > 0; --n, ++p) out << *p;
-    return out;
-}
 
 }  // namespace kerry
 
