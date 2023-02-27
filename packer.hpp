@@ -31,6 +31,13 @@ struct size_error : public std::length_error {
     using std::length_error::length_error;
 };
 
+class packer;
+
+// A helper type trait
+template <typename T>
+constexpr bool multibyte_packable =
+    sizeof(T) >= 2 && glucc::is_insertable_into_v<T, packer>;
+
 /**
  @brief Pack data into a network packet in a C++ manner
 
@@ -138,7 +145,7 @@ class packer {
     }
 
     /**
-     * @brief Return the cuurent size of the packed data, in bytes
+     * @brief Return the current size of the packed data, in bytes
      *
      * @return auto
      */
@@ -155,6 +162,27 @@ class packer {
         check_size();
         return m_data.data();
     }
+    /**
+     * @brief Packet data acces
+     * @name Packet data access
+     *
+     * Packets can be treated as streams of `std::byte`, `char`, or `unsigned
+     * char` types. Packets can be also be accessed as a `void*`.
+     *
+     * These functions allow implicit conversion to the required type.  Like the
+     * `data()` member, they will throw `size_error` for packers constructed
+     * with a target size, if the packed data is not exactly the right length.
+     *
+     * Typical use might be:
+     * ```
+     * int send(int sock, void* data, size_t len);
+     * //...
+     * packer p{20};
+     * // Insert exactly 20 bytes of data into p
+     * if (send(sock, p, p.size()) < 0) { handle error; }
+     * ```
+     */
+    ///@{
     [[nodiscard]] operator const void*() { return data(); }
     [[nodiscard]] operator const std::byte*() { return data(); }
     [[nodiscard]] operator const char*() {
@@ -165,6 +193,7 @@ class packer {
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
         return reinterpret_cast<const unsigned char*>(data());
     }
+    ///@}
     [[nodiscard]] auto capacity() const { return m_data.capacity(); }
     [[nodiscard]] auto target_size() const { return m_target_size; }
     [[nodiscard]] auto begin() const { return m_data.begin(); }
@@ -172,6 +201,18 @@ class packer {
 
     void clear() { m_data.clear(); }
 
+    /**
+     * @brief Compare the contents of the packet to a container
+     *
+     * This is mostly for the unit testing.  The Catch2 expression-parsing types
+     * work much better if this is a member function not a free function in the
+     * unit test code.
+     *
+     * @tparam C A container type of integral values convertable to std::byte
+     * @param rhs The containter to compare against
+     * @return true if the packet contents match the container
+     * @return false if the packet contents do not match the container
+     */
     template <typename C>
     bool operator==(const C& rhs) {
         return size() == rhs.size() &&
@@ -186,8 +227,18 @@ class packer {
         return *this;
     }
 
-    // This template works for all integral 1-byte types, including bool
-    // but does not allow larger integral types to accidentally use it
+    /**
+     * @brief Insert a 1-byte integral type
+     *
+     * This template works for all integral 1-byte types, including bool
+     * but does not allow larger integral types to accidentally use it
+     *
+     * 1-byte values do not need network byte order conversion
+     *
+     * @tparam B A 1-byte integral type (char, unsigned char, signed char, bool)
+     * @param b The value of type B to insert
+     * @return packer&
+     */
     template <typename B>
     std::enable_if_t<std::is_integral_v<B> && sizeof(B) == 1, packer&>
     operator<<(B b) {
@@ -195,6 +246,12 @@ class packer {
         return *this;
     }
 
+    /**
+     * @brief Efficiently insert a C-style array of std::byte
+     *
+     * @tparam N Size of the array
+     * @return packer&
+     */
     template <std::size_t N>
     packer& operator<<(const std::byte (&b)[N]) {
         copy(b, N);
@@ -215,21 +272,35 @@ class packer {
         return *this;
     }
 
-    // Allow C-style arrays of any non-byte-sized type for which we already have
-    // an inserter.  This uses the details: so has to be a free function
-    // template, not a member. C-style arrays of byte-sized types are handled in
-    // the class definition above using a direct call to copy() for efficiency
+    /**
+     * @brief Insert a fixed-size C-style array of packable types
+     *
+     * Allow C-style arrays of any non-byte-sized type for which we already have
+     * an inserter, including custom types with custom inserters. C-style arrays
+     * of byte-sized types integral are handled above using a direct call to
+     * copy() for efficiency
+     *
+     * @tparam T The type of the objects to be inserted
+     * @tparam N The number of objects to insert
+     * @return packer&
+     */
     template <typename T, std::size_t N>
-    std::enable_if_t<sizeof(T) >= 2 && glucc::is_insertable_into_v<T, packer>,
-                     packer&>
-    operator<<(const T (&b)[N]) {
+    std::enable_if_t<multibyte_packable<T>, packer&> operator<<(
+        const T (&b)[N]) {
         const T* p = b;
         for (int n = N; n > 0; --n, ++p) {
             *this << *p;
         }
         return *this;
     }
-
+    /**
+     * @brief Inserters for 2 and 4-byte integral types.
+     * @name Integral Types
+     *
+     * These are converted to network byte order.
+     *
+     */
+    ///@{
     packer& operator<<(std::int16_t val) {
         val = htons(val);
         copy(&val, 2);
@@ -252,6 +323,7 @@ class packer {
         copy(&val, 4);
         return *this;
     }
+    ///@}
 
    private:
     std::vector<std::byte> m_data{};
