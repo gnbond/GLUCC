@@ -14,26 +14,30 @@
 #include <type_traits>
 
 /*
- * Older MacOS versions (in particular, the clang version in MacOs XCode 10
- * which is the latest supported on OsX 10.13) have a bug that means the usual
- * C++17 SFINAE idiom using declval<>(), decltype() and std::void_t does not
- * work correctly.  We detect that here and use an alternate idiom for those
- * compilers.  The ugly #define is injected by the XCode version, we assume
- * XCode 11 for OsX 10.14 and beyond are OK, but I can't test that.
+ * Older LLVM libcpp ostreams versions (in particular, as shipped with the clang
+ * version in MacOs XCode 10) have a bug that means the usual C++17 SFINAE idiom
+ * does not work correctly for std::ostream.
  *
- * On these systems, `decltype(std::declval<S>() << std::declval<T>())` does not
- * work as expected (SFINAE does not correctly propagate up to the template
- * specialization so the resulting trait gives false positives). It works if the
- * `std::declval<S>()` is replaced by either an actual variable (`std::cout` or
- * even `S{}`), but this limits the trait to S types that are
- * default-constructable.
+ * On these systems, `decltype(std::declval<std::ostream>() <<
+ * std::declval<T>())` does not work as expected if `T` is not an insertable
+ * type. This (correctly) fails outside of declval(), but the template
+ * `operator<<(Stream&&, const T&)` this is ultimately referencing is not
+ * sufficiently constrained so inside decltype() the SFINAE does not correctly
+ * propagate up to the template specialization.  End result is that the
+ * resulting trait gives false positives for std::ostream.
  *
- * The problem appears to be related to XCode version or possibly OS version, as
- * installing a clang-11 from Homebrew fails to fix the problem.
+ * So far I have found this bug in libcpp shipped with XCode 10 (v 6000) and
+ * also in a homebrew-installed llvm11 (v11000), but it is not present in XCode
+ * 14. We detect that here and use an alternate idiom for those compilers.
+ *
+ * As far as I can see, gcc's libstdc++ does not suffer from this problem.
+ *
+ * See
+ * https://github.com/llvm/llvm-project/commit/fdc41e11f9687a50c97e2a59663bf2d541ff5489
  */
-#if defined(__APPLE__) && defined(__clang__) && \
-    __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ <= 101300
-#define BROKEN_DECLTYPE
+
+#if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION <= 11000
+#define BROKEN_LIBCPP
 #endif
 
 namespace glucc {
@@ -53,7 +57,7 @@ This is the base template, and it establishes two things:
 template <typename T, typename S, typename U = void>
 struct is_insertable_into : std::false_type {};
 
-#ifndef BROKEN_DECLTYPE
+#ifndef BROKEN_LIBCPP
 
 /**
 @brief This specialization for the true case
@@ -89,7 +93,7 @@ struct is_insertable_into<
 /*
 As a non-idiomatic work-around, we declare (but do not define) a function to
 return `S&` and use that in `decltype()`.  This is more-or-less equivalent to
-`std::declval<S>()` but does not trigger the bug in XCode-10 clang.
+`std::declval<S>()` but does not trigger the bug in XCode-10 libstdc++.
 */
 template <typename S>
 S& S_func();
