@@ -14,6 +14,18 @@ using namespace kerry;
 
 using result = std::initializer_list<std::uint8_t>;
 
+namespace kerry {
+
+// This has to be in namespace kerry:: and be discovered using ADL else the
+// Catch2 expression types get confused
+bool operator==(const packer& p, const result& r) {
+    return p.size() == r.size() && std::equal(p.begin(), p.end(), r.begin(),
+                                              [](std::byte l, std::uint8_t r) {
+                                                  return l == std::byte{r};
+                                              });
+}
+}  // namespace kerry
+
 TEST_CASE("packer basic", "[packer]") {
     packer p{};
 

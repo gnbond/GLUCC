@@ -201,27 +201,6 @@ class packer {
 
     void clear() { m_data.clear(); }
 
-    /**
-     * @brief Compare the contents of the packet to a container
-     *
-     * This is mostly for the unit testing.  The Catch2 expression-parsing types
-     * work much better if this is a member function not a free function in the
-     * unit test code.
-     *
-     * @tparam C A container type of integral values convertable to std::byte
-     * @param rhs The containter to compare against
-     * @return true if the packet contents match the container
-     * @return false if the packet contents do not match the container
-     */
-    template <typename C>
-    bool operator==(const C& rhs) {
-        return size() == rhs.size() &&
-               std::equal(begin(), end(), rhs.begin(),
-                          [](std::byte l, typename C::value_type r) {
-                              return l == std::byte{r};
-                          });
-    }
-
     packer& operator<<(std::byte val) {
         m_data.push_back(val);
         return *this;
