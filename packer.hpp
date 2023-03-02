@@ -97,7 +97,7 @@ order as required).  It provides inserters for fixed-size (C-style) arrays and
 std::arrays of supported types, including arrays of custom types with
 user-written inserters.  It hides all the network byte order conversions, the
 reinterpret_cast<>s and the memory copies needed to take a C++ object and turn
-it into a byte stream.,
+it into a byte stream.
 
 The packer can be created in two modes.  The default-constructed packer is
 suitable for variable-sized network packets, leaving the calling code to be

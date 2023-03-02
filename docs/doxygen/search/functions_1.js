@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['format_5fguard_0',['format_guard',['../classglucc_1_1format__guard.html#a448d82d286911bb403293737d8dcf211',1,'glucc::format_guard']]]
+  ['data_0',['data',['../classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee',1,'kerry::packer']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['is_5finsertable_5finto_5fv_0',['is_insertable_into_v',['../is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3',1,'glucc']]]
+  ['byte_5fintegral_0',['byte_integral',['../packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae',1,'kerry::details']]],
+  ['byte_5fpackable_1',['byte_packable',['../packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8',1,'kerry::details']]]
 ];

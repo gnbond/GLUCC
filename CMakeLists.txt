@@ -28,6 +28,8 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_HTML_OUTPUT .)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${CMAKE_CURRENT_BINARY_DIR}/README.md)
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs/doxygen)
+    # Don't document the details:: namespace
+    set(DOXYGEN_EXCLUDE_SYMBOLS "*::details::*")
     doxygen_add_docs(Doxygen
         ${HEADERS}
         ${CMAKE_CURRENT_BINARY_DIR}/README.md

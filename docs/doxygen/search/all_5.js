@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['operator_28_29_0',['operator()',['../structglucc_1_1optional__function_3_01_ret_07_args_8_8_8_08_4.html#abdf62ae4a582260023eceb7d9b41989e',1,'glucc::optional_function&lt; Ret(Args...)&gt;::operator()()'],['../structglucc_1_1optional__function_3_01void_07_args_8_8_8_08_4.html#af815d5188c02f9f3bedf6dc690b8ca2c',1,'glucc::optional_function&lt; void(Args...)&gt;::operator()()']]],
-  ['operator_3c_3c_1',['operator&lt;&lt;',['../classkerry_1_1packer.html#a0621ea9bdad8c3e0e39f158c36e4e1b4',1,'kerry::packer::operator&lt;&lt;(B b)'],['../classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20',1,'kerry::packer::operator&lt;&lt;(const std::byte(&amp;b)[N])'],['../classkerry_1_1packer.html#ae55f4edac0d5755da213c7a9c21f5b77',1,'kerry::packer::operator&lt;&lt;(const B(&amp;b)[N])'],['../classkerry_1_1packer.html#aa00b08397be3a6e72fd1bab31f73b106',1,'kerry::packer::operator&lt;&lt;(const T(&amp;b)[N])']]],
-  ['operator_3d_3d_2',['operator==',['../classkerry_1_1packer.html#a7c9e2fab7c02e71f4e48bada213f3824',1,'kerry::packer']]],
-  ['optional_5ffunction_3',['optional_function',['../structglucc_1_1optional__function.html',1,'glucc']]],
-  ['optional_5ffunction_2ehpp_4',['optional_function.hpp',['../optional__function_8hpp.html',1,'']]],
-  ['optional_5ffunction_3c_20ret_28args_2e_2e_2e_29_3e_5',['optional_function&lt; Ret(Args...)&gt;',['../structglucc_1_1optional__function_3_01_ret_07_args_8_8_8_08_4.html',1,'glucc']]],
-  ['optional_5ffunction_3c_20void_28args_2e_2e_2e_29_3e_6',['optional_function&lt; void(Args...)&gt;',['../structglucc_1_1optional__function_3_01void_07_args_8_8_8_08_4.html',1,'glucc']]]
+  ['is_5finsertable_2ehpp_0',['is_insertable.hpp',['../is__insertable_8hpp.html',1,'']]],
+  ['is_5finsertable_5finto_1',['is_insertable_into',['../structglucc_1_1is__insertable__into.html',1,'glucc']]],
+  ['is_5finsertable_5finto_3c_20t_2c_20s_2c_20std_3a_3avoid_5ft_3c_20decltype_28std_3a_3adeclval_3c_20s_20_3e_28_29_3c_3c_20std_3a_3adeclval_3c_20t_20_3e_28_29_29_2c_20std_3a_3aenable_5fif_5ft_3c_21std_3a_3ais_5fintegral_5fv_3c_20s_20_3e_20_3e_20_3e_20_3e_2',['is_insertable_into&lt; T, S, std::void_t&lt; decltype(std::declval&lt; S &gt;()&lt;&lt; std::declval&lt; T &gt;()), std::enable_if_t&lt;!std::is_integral_v&lt; S &gt; &gt; &gt; &gt;',['../structglucc_1_1is__insertable__into_3_01_t_00_01_s_00_01std_1_1void__t_3_01decltype_07std_1_1dec60f1d59155f95e1cfabdaa7c6d6e8e35.html',1,'glucc']]],
+  ['is_5finsertable_5finto_5fv_3',['is_insertable_into_v',['../is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3',1,'glucc']]]
 ];

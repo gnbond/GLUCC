@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['size_0',['size',['../classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b',1,'kerry::packer']]],
-  ['size_5ferror_1',['size_error',['../structkerry_1_1size__error.html',1,'kerry']]]
+  ['operator_28_29_0',['operator()',['../structglucc_1_1optional__function_3_01_ret_07_args_8_8_8_08_4.html#abdf62ae4a582260023eceb7d9b41989e',1,'glucc::optional_function&lt; Ret(Args...)&gt;::operator()()'],['../structglucc_1_1optional__function_3_01void_07_args_8_8_8_08_4.html#af815d5188c02f9f3bedf6dc690b8ca2c',1,'glucc::optional_function&lt; void(Args...)&gt;::operator()()']]],
+  ['operator_3c_3c_1',['operator&lt;&lt;',['../classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25',1,'kerry::packer::operator&lt;&lt;(B b)'],['../classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20',1,'kerry::packer::operator&lt;&lt;(const std::byte(&amp;b)[N])'],['../classkerry_1_1packer.html#acf32e58849ee41b24719fb79761d2a68',1,'kerry::packer::operator&lt;&lt;(const B(&amp;b)[N])'],['../classkerry_1_1packer.html#a9754d241bc64c6d0b514ab08421b6d3f',1,'kerry::packer::operator&lt;&lt;(const T(&amp;b)[N])'],['../classkerry_1_1packer.html#a709aa911a043bff637878b41fd61b6bd',1,'kerry::packer::operator&lt;&lt;(const std::array&lt; T, N &gt; &amp;a)'],['../classkerry_1_1packer.html#ab01ea9ccc212e0fed217ce90e7d88f5c',1,'kerry::packer::operator&lt;&lt;(const std::array&lt; T, N &gt; &amp;a)']]],
+  ['optional_5ffunction_2',['optional_function',['../structglucc_1_1optional__function.html',1,'glucc']]],
+  ['optional_5ffunction_2ehpp_3',['optional_function.hpp',['../optional__function_8hpp.html',1,'']]],
+  ['optional_5ffunction_3c_20ret_28args_2e_2e_2e_29_3e_4',['optional_function&lt; Ret(Args...)&gt;',['../structglucc_1_1optional__function_3_01_ret_07_args_8_8_8_08_4.html',1,'glucc']]],
+  ['optional_5ffunction_3c_20void_28args_2e_2e_2e_29_3e_5',['optional_function&lt; void(Args...)&gt;',['../structglucc_1_1optional__function_3_01void_07_args_8_8_8_08_4.html',1,'glucc']]]
 ];
