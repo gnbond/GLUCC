@@ -18,6 +18,7 @@
 - [8. Some other Useful C++ Classes](#8-some-other-useful-c-classes)
   - [8.1. KissNet](#81-kissnet)
   - [8.2. CRC++](#82-crc)
+  - [8.3. Loguru](#83-loguru)
 
 
 # 1. Introduction
@@ -176,3 +177,11 @@ part) to work well with KissNet.
 [CRC++](https://github.com/d-bahr/CRCpp) is a single-header solution for fast
 calculation of all manner of CRCs (40+ CRC polynomials included, from 6 to 64
 bits).  BSD License.
+
+## 8.3. Loguru
+
+[loguru](https://github.com/emilk/loguru) is a fast, simple C++ logger that is
+mostly compatible with glog.  It has the same public-domain unlicense as GLUCC
+and is easily copied into your project (2 files).  Don't confuse the C++ loguru
+with the (python logging package)[https://github.com/Delgan/loguru] of the same
+name.

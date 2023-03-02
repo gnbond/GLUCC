@@ -31,35 +31,73 @@ struct size_error : public std::length_error {
     using std::length_error::length_error;
 };
 
+/// Forward-declare this so we can define the type trait
 class packer;
 
-// A helper type trait
+namespace details {
+/**
+ * @brief A type trait to represent a type that can be inserted into a packer
+ *
+ * @tparam T
+ */
 template <typename T>
-constexpr bool multibyte_packable =
-    sizeof(T) >= 2 && glucc::is_insertable_into_v<T, packer>;
+constexpr bool packable = glucc::is_insertable_into_v<T, packer>;
 
 /**
- @brief Pack data into a network packet in a C++ manner
+ * @brief A type trait to represent a trivial type that can be inserted into
+ * a packer
+ *
+ * @tparam T
+ */
+template <typename T>
+constexpr bool byte_packable = sizeof(T) == 1 && packable<T>;
+
+/**
+ * @brief A type trait to represent a non-trivial type that can be inserted into
+ * a packer
+ *
+ * @tparam T
+ */
+template <typename T>
+constexpr bool multibyte_packable = sizeof(T) >= 2 && packable<T>;
+
+/**
+ * @brief A type trait that is true if T is a 1-byte integral type
+ *
+ * @tparam T
+ */
+template <typename T>
+constexpr bool byte_integral = sizeof(T) == 1 && std::is_integral_v<T>;
+
+}  // namespace details
+
+/**
+ @brief Pack data into a binary protocol packet in a C++ manner
 
  Dealing with binary protocol packets hasn't really changed in 40 years - it's
- still usually C code, and usually a horrible mix of type punning, unsafe
- pointer casts, and calls to `htonl()` and `memcpy()`, all written with silent
- prayers that the new 64-bit compiler version won't add invisible padding bytes
- to your structs.
+ still usually C code, and usually a horrible mix of type punning, malloc()'d
+ memory, unsafe pointer casts, and calls to `htonl()` and `memcpy()`, all
+ written with silent prayers that the new 64-bit compiler version won't add
+ invisible padding bytes to your structs.
 
  Then you run a static analyzer over your code, and have to silence hundreds of
- warnings about all those unsafe 40-year-old coding practices.
+ warnings about all those unsafe 40-year-old coding practices.  And heaven help
+ you if you also need to meet MISRA or similar high-integrity software
+ standards.
 
 There's gotta be a better way.  A C++ way.
 
 Well, now there is.
 
-kerry::packer uses an API inspired by C++ iostreams inserters that is extensible
-and type-safe.  It wraps `std::vector<std::byte>` to store the generated packet
-data.  It provides inserters for 1/2/4-byte integral types (converting to
-network byte order as required).  It provides inserters for fixed-size (C-style)
-arrays of supported types, including arrays of custom types with user-written
-inserters.
+kerry::packer uses an API inspired by C++ iostreams inserters that is
+extensible, type-safe and bounds-safe.  It wraps `std::vector<std::byte>` to
+store the generated packet data and avoid any memory leaks or bounds errors.  It
+provides inserters for 1/2/4-byte integral types (converting to network byte
+order as required).  It provides inserters for fixed-size (C-style) arrays and
+std::arrays of supported types, including arrays of custom types with
+user-written inserters.  It hides all the network byte order conversions, the
+reinterpret_cast<>s and the memory copies needed to take a C++ object and turn
+it into a byte stream.,
 
 The packer can be created in two modes.  The default-constructed packer is
 suitable for variable-sized network packets, leaving the calling code to be
@@ -69,11 +107,13 @@ fixed-size network packets, and the packer will check that the generated packet
 is exactly that many bytes (by throwing an exception when the data is extracted
 if the size is not exactly correct).
 
-Another annoyance is the inconsistencies with the types used to store binary
-packets and the standard functions used to manipulate those packets.  The packer
-uses std::byte as the native type (this use-case seems to be the main intention
-of the std::byte type) but allows implicit conversions to `void*`, `char*` and
-`unsigned char*`.  So the following code is typical:
+Another annoyance in network programming is the inconsistencies with the types
+used to store binary packets and the standard functions used to manipulate those
+packets.  Old code uses `char *` or sometimes `unsigned char*`.  Slightly less
+old code uses `void *`. The packer uses std::byte as the native type (this
+use-case seems to be the main intention of the std::byte type) but allows
+implicit conversions to `void*`, `char*` and `unsigned char*`.  So the following
+code is typical:
 ```
 packer p;
 int sock = socket(...);
@@ -96,14 +136,15 @@ packer& operator<<(packer& p, const item_packet& ip) {
 
 // ...
 
-send(int sock, const item_packet& ip) {
+pack_and_send(int sock, const item_packet& ip) {
     packer p{17};
     p << ip;
-    if (send(sock, p, p.size()) < 0) {
+    if (send(sock, p, p.size(), 0) < 0) {
         // handle error
     }
 }
 ```
+
 What's with the namespace?  This is a little pun that should raise a smile from
 anyone familiar with the last 40 years of Australian media or political affairs.
 Or the history of cricket in the late 20th century.
@@ -112,10 +153,11 @@ TBD:
 - member documentation
 - example usage
 - consider binary blobs.  make copy() public?
-- support other containers of packable types? (std::array, std::vector?
-iterators? )
+- support other containers of packable types? (std::vector? iterators? )
  */
 class packer {
+    using Vector = std::vector<std::byte>;
+
    public:
     /**
      * @brief Construct a new packer object with variable size
@@ -132,6 +174,18 @@ class packer {
      * @param size packet size
      */
     packer(std::size_t size) : m_target_size{size} { m_data.reserve(size); }
+
+    /**
+     * @name Standard container member types
+     *
+     */
+    ///@{
+    using value_type = Vector::value_type;
+    using pointer = Vector::const_pointer;
+    using const_pointer = pointer;
+    using reference = Vector::const_reference;
+    using const_reference = reference;
+    ///@}
 
     /**
      * @brief Reserve space for size bytes
@@ -156,6 +210,9 @@ class packer {
      * This will throw size_error if the packer was created with a target size
      * and there are not exactly that many bytes in the packet.
      *
+     * Beware dangling pointers if the packer is destroyed or if more data is
+     * added.
+     *
      * @return const std::byte*
      */
     [[nodiscard]] auto data() const {
@@ -163,7 +220,6 @@ class packer {
         return m_data.data();
     }
     /**
-     * @brief Packet data acces
      * @name Packet data access
      *
      * Packets can be treated as streams of `std::byte`, `char`, or `unsigned
@@ -172,6 +228,9 @@ class packer {
      * These functions allow implicit conversion to the required type.  Like the
      * `data()` member, they will throw `size_error` for packers constructed
      * with a target size, if the packed data is not exactly the right length.
+     *
+     * Beware dangling pointers if the packer is destroyed or if more data is
+     * added.
      *
      * Typical use might be:
      * ```
@@ -195,10 +254,32 @@ class packer {
     }
     ///@}
     [[nodiscard]] auto capacity() const { return m_data.capacity(); }
+    /**
+     * @brief The target size for this packer
+     *
+     * Returns 0 if this packer was not created with a target size
+     *
+     * @return auto
+     */
     [[nodiscard]] auto target_size() const { return m_target_size; }
+
+    /**
+     * @name Iterators
+     *
+     * Iterators are provided to access the data.  Updating packet contents via
+     * iterators is not supported.
+     */
+    ///@{
     [[nodiscard]] auto begin() const { return m_data.begin(); }
     [[nodiscard]] auto end() const { return m_data.end(); }
+    ///@}
 
+    /**
+     * @brief Clear the packer for re-use
+     *
+     * Target size is not updated but size() is set to zero and existing packet
+     * data is lost.
+     */
     void clear() { m_data.clear(); }
 
     packer& operator<<(std::byte val) {
@@ -219,8 +300,7 @@ class packer {
      * @return packer&
      */
     template <typename B>
-    std::enable_if_t<std::is_integral_v<B> && sizeof(B) == 1, packer&>
-    operator<<(B b) {
+    std::enable_if_t<details::byte_integral<B>, packer&> operator<<(B b) {
         copy(&b, 1);
         return *this;
     }
@@ -245,8 +325,8 @@ class packer {
      * @return packer&
      */
     template <typename B, std::size_t N>
-    std::enable_if_t<std::is_integral_v<B> && sizeof(B) == 1, packer&>
-    operator<<(const B (&b)[N]) {
+    std::enable_if_t<details::byte_integral<B>, packer&> operator<<(
+        const B (&b)[N]) {
         copy(&b, N);
         return *this;
     }
@@ -264,7 +344,7 @@ class packer {
      * @return packer&
      */
     template <typename T, std::size_t N>
-    std::enable_if_t<multibyte_packable<T>, packer&> operator<<(
+    std::enable_if_t<details::multibyte_packable<T>, packer&> operator<<(
         const T (&b)[N]) {
         const T* p = b;
         for (int n = N; n > 0; --n, ++p) {
@@ -304,8 +384,54 @@ class packer {
     }
     ///@}
 
+    /**
+     * @brief Push any insertable type to the end of the packet
+     *
+     * Alas, back_insert_iterator<> can only insert Container::value_type (aka
+     * std::byte) so this is not as useful as it might be
+     *
+     * @tparam T an insertable type
+     * @param val Value to push into the packet
+     */
+    template <typename T>
+    std::enable_if_t<details::packable<T>> push_back(const T& val) {
+        *this << val;
+    }
+
+    /**
+     * @brief Pack a std::array of single-byte packable data
+     *
+     * This uses copy() to pack the array efficiently
+     *
+     * @tparam T The type to pack
+     * @tparam N The length of the array
+     * @param a
+     * @return packer&
+     */
+    template <typename T, std::size_t N>
+    std::enable_if_t<details::byte_packable<T>, packer&> operator<<(
+        const std::array<T, N>& a) {
+        copy(a.data(), a.size());
+        return *this;
+    }
+
+    /**
+     * @brief Pack a std::array of multi-byte packable data
+     *
+     * @tparam T The type to pack
+     * @tparam N The length of the array
+     * @param a
+     * @return packer&
+     */
+    template <typename T, std::size_t N>
+    std::enable_if_t<details::multibyte_packable<T>, packer&> operator<<(
+        const std::array<T, N>& a) {
+        for (auto& t : a) *this << t;
+        return *this;
+    }
+
    private:
-    std::vector<std::byte> m_data{};
+    Vector m_data{};
     std::size_t m_target_size{0};
 
     void copy(const void* p, int n) {

@@ -5,8 +5,10 @@
 #include <catch2/catch_test_macros.hpp>
 
 // System headers
+#include <array>
 #include <cstdint>
 #include <initializer_list>
+#include <iterator>
 #include <stdexcept>
 #include <type_traits>
 
@@ -137,6 +139,48 @@ TEST_CASE("packer short array", "[packer]") {
     CHECK(p == result{0, 1, 0xff, 0xfe});
 }
 
+TEST_CASE("packer short std::array", "[packer]") {
+    packer p{};
+
+    std::array<std::int16_t, 2> arr = {1, -2};
+    p << arr;
+    CHECK(p.size() == 4);
+    CHECK(p == result{0, 1, 0xff, 0xfe});
+}
+
+TEST_CASE("packer char std::array", "[packer]") {
+    packer p{};
+
+    std::array<char, 2> arr = {1, -2};
+    p << arr;
+    CHECK(p.size() == 2);
+    CHECK(p == result{1, 0xfe});
+}
+
+TEST_CASE("packer char literal", "[packer]") {
+    packer p{};
+
+    p << "Hello";
+    CHECK(p.size() == 6);  // Dont forget the terminsating NUL
+    CHECK(p == result{'H', 'e', 'l', 'l', 'o', 0});
+}
+
+TEST_CASE("packer short push_back", "[packer]") {
+    packer p{};
+
+    std::int16_t arr[] = {1, -2};
+    p.push_back(arr[0]);
+    p.push_back(arr[1]);
+    CHECK(p.size() == 4);
+    CHECK(p == result{0, 1, 0xff, 0xfe});
+}
+
+/*
+    this should not cpompile
+    struct Foo{};
+    p << Foo{};
+    p.push_back(Foo{});
+*/
 /*
     This should not compile
     std::uint64_t arr[] = {1, -2};
