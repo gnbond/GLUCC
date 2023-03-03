@@ -28,3 +28,5 @@ target_link_libraries(UnitTests PRIVATE Catch2::Catch2WithMain)
 target_include_directories(UnitTests PRIVATE ..)
 
 catch_discover_tests(UnitTests)
+
+add_subdirectory(build-fail)

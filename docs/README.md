@@ -183,5 +183,5 @@ bits).  BSD License.
 [loguru](https://github.com/emilk/loguru) is a fast, simple C++ logger that is
 mostly compatible with glog.  It has the same public-domain unlicense as GLUCC
 and is easily copied into your project (2 files).  Don't confuse the C++ loguru
-with the (python logging package)[https://github.com/Delgan/loguru] of the same
+with the [python logging package](https://github.com/Delgan/loguru) of the same
 name.

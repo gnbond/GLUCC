@@ -99,19 +99,6 @@ TEST_CASE("packer 32bit types", "[packer]") {
     CHECK(p == result{0xff, 0xff, 0xff, 0xfe, 0x11, 0x22, 0x33, 0x44});
 }
 
-/*
-
-    This should not compile (assuming long is > 32 bits) as the operator<< is
-    ambiguous (unit16 and uint32 are equally close matches).  This is
-    intentional, there is no htonll() function to fix byteorder for 8-byte
-    integers.
-
-    long l1 = 1;
-    unsigned long l2 = 2;
-
-    p << l1 << l2;
-*/
-
 TEST_CASE("packer byte array", "[packer]") {
     packer p{};
 
@@ -175,17 +162,6 @@ TEST_CASE("packer short push_back", "[packer]") {
     CHECK(p == result{0, 1, 0xff, 0xfe});
 }
 
-/*
-    this should not cpompile
-    struct Foo{};
-    p << Foo{};
-    p.push_back(Foo{});
-*/
-/*
-    This should not compile
-    std::uint64_t arr[] = {1, -2};
-    p << arr;
-  */
 TEST_CASE("packer data() converters", "[packer]") {
     packer p{};
     const std::byte* bytep = p;
