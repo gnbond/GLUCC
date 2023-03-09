@@ -1,13 +1,13 @@
-# Test that thing which sould fail to compile, do actually fail to compile, and for the reaons we expect.
+# Test that things which should fail to compile, do actually fail to compile, and for the reaons we expect.
 
 # Ideas from https://ibob.bg/blog/2022/10/04/testing-build-failure-with-cmake/
-# But ive implemented this using shell script for the actual test, not cmake,
-# and this implementation is ver specific to the GLUCC library (and running the tests under linux).
+# But I've implemented this using shell script for the actual test, not cmake,
+# and this implementation is very specific to the GLUCC library (and running the tests under linux).
 
 function(add_nocompile_test filename )
     get_filename_component(base ${filename} NAME_WE )
 
-    add_executable( ${base}-build EXCLUDE_FROM_ALL ${filename} )
+    add_library( ${base}-build EXCLUDE_FROM_ALL ${filename} )
     # TO find the source headers
     target_include_directories(${base}-build PRIVATE ../..)
 
@@ -15,8 +15,11 @@ function(add_nocompile_test filename )
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/nocompile.sh ${CMAKE_CURRENT_SOURCE_DIR}/${filename})
 endfunction()
 
-# CTest swallows the stderr / stdout from the child shell script which can make debugging a bit tricky.
-# IF a no-compile test for foo.cpp fails, then you can work out why by manually building the target foo-build
+# CTest swallows the stderr / stdout from the child shell script which can make
+# debugging a bit tricky. IF a no-compile test for foo.cpp fails, then you can
+# work out why by manually building the target foo-build, or by changing to the
+# build/Tests/build-fail directory and running 
+#  ../../../Tests/build-fail/nocompile.sh ../../../Tests/build-fail/foo.cpp
 
 # test code files should include 1 or more lines like 
 #

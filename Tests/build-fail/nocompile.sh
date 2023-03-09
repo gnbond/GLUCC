@@ -1,7 +1,5 @@
 #! /bin/sh
 
-set -e
-
 # nocompile.sh filename
 #
 # 1. parse the file to see if any "// expect: " lines, these are expected compile errors
