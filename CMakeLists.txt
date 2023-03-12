@@ -8,6 +8,7 @@ set(HEADERS
     optional_function.hpp
     format_guard.hpp
     packer.hpp
+    unpacker.hpp
     is_insertable.hpp
 )
 

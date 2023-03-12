@@ -11,9 +11,7 @@
  * Comments / issues / pull requests gladly accepted
  */
 
-#include <cstddef>
 #include <cstdint>
-#include <initializer_list>
 #include <stdexcept>
 #include <string>
 #include <type_traits>

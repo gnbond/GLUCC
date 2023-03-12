@@ -38,3 +38,7 @@ add_nocompile_test( packer_long_insert.cpp )
 
 add_nocompile_test( optional_function_not_function.cpp )
 add_nocompile_test( optional_function_not_function2.cpp )
+
+add_nocompile_test( unpacker_int_array.cpp )
+add_nocompile_test( unpacker_int_std_array.cpp )
+add_nocompile_test( unpacker_long.cpp )

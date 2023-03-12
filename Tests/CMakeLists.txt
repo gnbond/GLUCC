@@ -19,6 +19,7 @@ set(TEST_FILES
     test_optional_function.cpp
     test_format_guard.cpp
     test_packer.cpp
+    test_unpacker.cpp
     test_is_insertable.cpp
 )
 
