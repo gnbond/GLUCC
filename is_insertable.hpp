@@ -74,7 +74,7 @@ arguments to std::void_t are not well-formed, then the SFINAE rules remove this
 specialization and the `false_type` main template is used.
 
 We check two conditions in the void_t<>:
- - That, for stream `s` of type `S` and value `t` of type `T`, the expression `s
+ - That, for lvalue `s` of type `S` and value `t` of type `T`, the expression `s
    << t` is well-formed.
  - That S is not an integral type, as `1 << 3` is also well-formed but does not
    represent insertion into a stream
@@ -85,7 +85,7 @@ We check two conditions in the void_t<>:
 template <typename T, typename S>
 struct is_insertable_into<
     T, S,
-    std::void_t<decltype(std::declval<S>() << std::declval<T>()),
+    std::void_t<decltype(std::declval<S&>() << std::declval<T>()),
                 std::enable_if_t<!std::is_integral_v<S>>>> : std::true_type {};
 
 #else

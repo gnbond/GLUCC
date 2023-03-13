@@ -1,10 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
 #include <sstream>
+#include <utility>
 
 #include "is_insertable.hpp"
 
 using namespace glucc;
 
+// A test type with no defined operations
 struct Foo {};
 
 TEST_CASE("insertable", "[is_insertable]") {
@@ -17,4 +19,14 @@ TEST_CASE("insertable", "[is_insertable]") {
     // 1 << 4 is a well-defined expression, but that does not represnt insertion
     // into a stream
     CHECK_FALSE(is_insertable_into_v<int, int>);
+}
+
+struct Stream {};
+struct Bar {};
+Stream& operator<<(Stream&, const Bar&);
+
+TEST_CASE("custom stream", "[is_insertable]") {
+    CHECK(is_insertable_into_v<Bar, Stream>);
+    CHECK_FALSE(is_insertable_into_v<int, Stream>);
+    CHECK_FALSE(is_insertable_into_v<Foo, Stream>);
 }
