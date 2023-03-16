@@ -21,12 +21,18 @@ TEST_CASE("insertable", "[is_insertable]") {
     CHECK_FALSE(is_insertable_into_v<int, int>);
 }
 
-struct Stream {};
+// Checks for custom streams, with both member function and free function
+// inserters
+struct Baz {};
+struct Stream {
+    Stream& operator<<(const Baz&);
+};
 struct Bar {};
 Stream& operator<<(Stream&, const Bar&);
 
 TEST_CASE("custom stream", "[is_insertable]") {
     CHECK(is_insertable_into_v<Bar, Stream>);
+    CHECK(is_insertable_into_v<Baz, Stream>);
     CHECK_FALSE(is_insertable_into_v<int, Stream>);
     CHECK_FALSE(is_insertable_into_v<Foo, Stream>);
 }
