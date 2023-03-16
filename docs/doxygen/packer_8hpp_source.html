@@ -75,197 +75,191 @@ $(function() {
 <a href="packer_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef KERRY_PACKER_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define KERRY_PACKER_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;initializer_list&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="is__insertable_8hpp.html">is_insertable.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="is__insertable_8hpp.html">is_insertable.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace </span>kerry {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>kerry {</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structkerry_1_1size__error.html">   30</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structkerry_1_1size__error.html">size_error</a> : <span class="keyword">public</span> std::length_error {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">using </span>std::length_error::length_error;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">class </span><a class="code hl_class" href="classkerry_1_1packer.html">packer</a>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">namespace </span>details {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">   44</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">packable</a> = glucc::is_insertable_into_v&lt;T, packer&gt;;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">   53</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">byte_packable</a> = <span class="keyword">sizeof</span>(T) == 1 &amp;&amp; packable&lt;T&gt;;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">   62</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">multibyte_packable</a> = <span class="keyword">sizeof</span>(T) &gt;= 2 &amp;&amp; packable&lt;T&gt;;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">   70</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">byte_integral</a> = <span class="keyword">sizeof</span>(T) == 1 &amp;&amp; std::is_integral_v&lt;T&gt;;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}  <span class="comment">// namespace details</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html">  158</a></span><span class="keyword">class </span><a class="code hl_class" href="classkerry_1_1packer.html">packer</a> {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keyword">using </span>Vector = std::vector&lt;std::byte&gt;;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">  166</a></span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">  176</a></span>    <a class="code hl_function" href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">packer</a>(std::size_t <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>) : m_target_size{<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>} { m_data.reserve(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>); }</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">using </span>value_type = Vector::value_type;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keyword">using </span>pointer = Vector::const_pointer;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keyword">using </span>const_pointer = pointer;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keyword">using </span>reference = Vector::const_reference;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keyword">using </span>const_reference = reference;</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">  197</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">reserve</a>(std::size_t <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>) {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">if</span> (!m_target_size) m_data.reserve(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>);</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    }</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">  206</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.size(); }</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">  218</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        check_size();</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">return</span> m_data.data();</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    }</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">void</span>*() { <span class="keywordflow">return</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>(); }</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> std::byte*() { <span class="keywordflow">return</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>(); }</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">char</span>*() {</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="comment">// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)</span></div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(<a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>());</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    }</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*() {</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        <span class="comment">// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)</span></div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(<a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>());</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structkerry_1_1size__error.html">   28</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structkerry_1_1size__error.html">size_error</a> : <span class="keyword">public</span> std::length_error {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">using </span>std::length_error::length_error;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">class </span><a class="code hl_class" href="classkerry_1_1packer.html">packer</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">namespace </span>details {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">   42</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">packable</a> = glucc::is_insertable_into_v&lt;T, packer&gt;;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">   54</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">nontrivial_packable</a> =</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    (<span class="keyword">sizeof</span>(T) &gt;= 2 || std::is_class_v&lt;T&gt;)&amp;&amp;packable&lt;T&gt;;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">   66</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">byte_integral</a> =</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">sizeof</span>(T) == 1 &amp;&amp; (std::is_integral_v&lt;T&gt; || std::is_same_v&lt;T, std::byte&gt;);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}  <span class="comment">// namespace details</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html">  163</a></span><span class="keyword">class </span><a class="code hl_class" href="classkerry_1_1packer.html">packer</a> {</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keyword">using </span>Vector = std::vector&lt;std::byte&gt;;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">  171</a></span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">  181</a></span>    <a class="code hl_function" href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">packer</a>(std::size_t <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>) : m_target_size{<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>} { m_data.reserve(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>); }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keyword">using </span>value_type = Vector::value_type;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keyword">using </span>pointer = Vector::const_pointer;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keyword">using </span>const_pointer = pointer;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keyword">using </span>reference = Vector::const_reference;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keyword">using </span>const_reference = reference;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">  202</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">reserve</a>(std::size_t <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>) {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keywordflow">if</span> (!m_target_size) m_data.reserve(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">  211</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.size(); }</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">  223</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        check_size();</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keywordflow">return</span> m_data.data();</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">void</span>*() { <span class="keywordflow">return</span> as_voidp(); }</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> std::byte*() { <span class="keywordflow">return</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>(); }</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">char</span>*() {</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(as_voidp());</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    }</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    [[nodiscard]] <span class="keyword">auto</span> capacity()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.capacity(); }</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">  264</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">target_size</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_target_size; }</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    [[nodiscard]] <span class="keyword">auto</span> begin()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.begin(); }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    [[nodiscard]] <span class="keyword">auto</span> end()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.end(); }</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">  283</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">clear</a>() { m_data.clear(); }</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">  285</a></span>    <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp; <a class="code hl_function" href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">operator&lt;&lt;</a>(std::byte val) {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        m_data.push_back(val);</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    }</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    std::enable_if_t&lt;details::byte_integral&lt;B&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(B b) {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        copy(&amp;b, 1);</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    }</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">  315</a></span>    <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp; <a class="code hl_function" href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">operator&lt;&lt;</a>(<span class="keyword">const</span> std::byte (&amp;b)[N]) {</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        copy(b, N);</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    }</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    std::enable_if_t&lt;details::byte_integral&lt;B&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        <span class="keyword">const</span> B (&amp;b)[N]) {</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        copy(&amp;b, N);</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    }</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    std::enable_if_t&lt;details::multibyte_packable&lt;T&gt;, <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp;&gt; operator&lt;&lt;(</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        <span class="keyword">const</span> T (&amp;b)[N]) {</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        <span class="keyword">const</span> T* p = b;</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = N; n &gt; 0; --n, ++p) {</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            *<span class="keyword">this</span> &lt;&lt; *p;</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>        }</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>    }</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::int16_t val) {</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        val = htons(val);</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        copy(&amp;val, 2);</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    }</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::uint16_t val) {</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        val = htons(val);</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        copy(&amp;val, 2);</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    }</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::int32_t val) {</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        val = htonl(val);</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        copy(&amp;val, 4);</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    }</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::uint32_t val) {</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        val = htonl(val);</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        copy(&amp;val, 4);</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>    }</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a709aa911a043bff637878b41fd61b6bd">  397</a></span>    std::enable_if_t&lt;details::packable&lt;T&gt;&gt; <a class="code hl_function" href="classkerry_1_1packer.html#aff68874b12f89c157ef035ade186b128">push_back</a>(<span class="keyword">const</span> T&amp; val) {</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        *<span class="keyword">this</span> &lt;&lt; val;</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    }</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> </div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    std::enable_if_t&lt;details::byte_packable&lt;T&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        <span class="keyword">const</span> std::array&lt;T, N&gt;&amp; a) {</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        copy(a.data(), a.size());</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    }</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    std::enable_if_t&lt;details::multibyte_packable&lt;T&gt;, <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp;&gt; operator&lt;&lt;(</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        <span class="keyword">const</span> std::array&lt;T, N&gt;&amp; a) {</div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; t : a) *<span class="keyword">this</span> &lt;&lt; t;</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>    }</div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>   <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    Vector m_data{};</div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    std::size_t m_target_size{0};</div>
-<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span> </div>
-<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>    <span class="keywordtype">void</span> copy(<span class="keyword">const</span> <span class="keywordtype">void</span>* p, <span class="keywordtype">int</span> n) {</div>
-<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        <span class="comment">// half the point of this class is to hide the inevitable casts and</span></div>
-<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        <span class="comment">// pointer messes</span></div>
-<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>        <span class="comment">// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)</span></div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>        <span class="keyword">auto</span> bp = <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::byte*<span class="keyword">&gt;</span>(p);</div>
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>        <span class="comment">// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)</span></div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        m_data.insert(m_data.end(), bp, bp + n);</div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>    }</div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span> </div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    <span class="keywordtype">void</span> check_size()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        <span class="keywordflow">if</span> (m_target_size &gt; 0 &amp;&amp; <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>() != m_target_size) {</div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>            <span class="keywordflow">throw</span> size_error{std::string(<span class="stringliteral">&quot;packer size &quot;</span>) +</div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>                             std::to_string(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>()) + <span class="stringliteral">&quot; &lt;&gt; &quot;</span> +</div>
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>                             std::to_string(m_target_size)};</div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>        }</div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    }</div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>};</div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span> </div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>}  <span class="comment">// namespace kerry</span></div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span> </div>
-<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span><span class="preprocessor">#endif  </span><span class="comment">// KERRY_PACKER_H</span></div>
-<div class="ttc" id="aclasskerry_1_1packer_html"><div class="ttname"><a href="classkerry_1_1packer.html">kerry::packer</a></div><div class="ttdoc">Pack data into a binary protocol packet in a C++ manner.</div><div class="ttdef"><b>Definition:</b> packer.hpp:158</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_a2fbaeb98668999d7a2cb62e4261ac02b"><div class="ttname"><a href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">kerry::packer::size</a></div><div class="ttdeci">auto size() const</div><div class="ttdoc">Return the current size of the packed data, in bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:206</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_a4d7779ed00875ecbf7625c0e9371fb35"><div class="ttname"><a href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">kerry::packer::reserve</a></div><div class="ttdeci">void reserve(std::size_t size)</div><div class="ttdoc">Reserve space for size bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:197</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_a6a88f64e85f8580b5777cc8fa7263273"><div class="ttname"><a href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">kerry::packer::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear the packer for re-use.</div><div class="ttdef"><b>Definition:</b> packer.hpp:283</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_a7c320d4173497caa9549a46ad2597bee"><div class="ttname"><a href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">kerry::packer::target_size</a></div><div class="ttdeci">auto target_size() const</div><div class="ttdoc">The target size for this packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:264</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_aa156481c0a03d69ab710d4c6dbcb4f25"><div class="ttname"><a href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">kerry::packer::operator&lt;&lt;</a></div><div class="ttdeci">std::enable_if_t&lt; details::byte_integral&lt; B &gt;, packer &amp; &gt; operator&lt;&lt;(B b)</div><div class="ttdoc">Insert a 1-byte integral type.</div><div class="ttdef"><b>Definition:</b> packer.hpp:303</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_ab2710cb710ffcedeae61663d0ec58782"><div class="ttname"><a href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">kerry::packer::packer</a></div><div class="ttdeci">packer(std::size_t size)</div><div class="ttdoc">Construct a new packer object with a known packet size.</div><div class="ttdef"><b>Definition:</b> packer.hpp:176</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_abcd10526d48b5341c0d6f02355b576ee"><div class="ttname"><a href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">kerry::packer::data</a></div><div class="ttdeci">auto data() const</div><div class="ttdoc">Return a pointer to the constructed packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:218</div></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    [[nodiscard]] <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*() {</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(as_voidp());</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    }</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    [[nodiscard]] <span class="keyword">auto</span> capacity()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.capacity(); }</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">  267</a></span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">target_size</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_target_size; }</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    [[nodiscard]] <span class="keyword">auto</span> begin()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.begin(); }</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    [[nodiscard]] <span class="keyword">auto</span> end()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data.end(); }</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">  286</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">clear</a>() { m_data.clear(); }</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">  288</a></span>    <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp; <a class="code hl_function" href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">operator&lt;&lt;</a>(std::byte val) {</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        m_data.push_back(val);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    }</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> B&gt;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    std::enable_if_t&lt;details::byte_integral&lt;B&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(B b) {</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        copy(&amp;b, 1);</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    }</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">  318</a></span>    <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp; <a class="code hl_function" href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">operator&lt;&lt;</a>(<span class="keyword">const</span> std::byte (&amp;b)[N]) {</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        copy(b, N);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    }</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> B, std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    std::enable_if_t&lt;details::byte_integral&lt;B&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="keyword">const</span> B (&amp;b)[N]) {</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        copy(&amp;b, N);</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    }</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    std::enable_if_t&lt;details::nontrivial_packable&lt;T&gt;, <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp;&gt; operator&lt;&lt;(</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        <span class="keyword">const</span> T (&amp;b)[N]) {</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>        <span class="keyword">const</span> T* p = b;</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = N; n &gt; 0; --n, ++p) {</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            *<span class="keyword">this</span> &lt;&lt; *p;</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        }</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    }</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::int16_t val) {</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        val = htons(val);</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        copy(&amp;val, 2);</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    }</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::uint16_t val) {</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        val = htons(val);</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        copy(&amp;val, 2);</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    }</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> </div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::int32_t val) {</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        val = htonl(val);</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        copy(&amp;val, 4);</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>    }</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>    <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(std::uint32_t val) {</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        val = htonl(val);</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        copy(&amp;val, 4);</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    }</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> </div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno"><a class="line" href="classkerry_1_1packer.html#a01db403fb3719e9fafeabc80f04d186d">  400</a></span>    std::enable_if_t&lt;details::packable&lt;T&gt;&gt; <a class="code hl_function" href="classkerry_1_1packer.html#aff68874b12f89c157ef035ade186b128">push_back</a>(<span class="keyword">const</span> T&amp; val) {</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        *<span class="keyword">this</span> &lt;&lt; val;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    }</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    std::enable_if_t&lt;details::byte_integral&lt;T&gt;, <a class="code hl_class" href="classkerry_1_1packer.html">packer</a>&amp;&gt; operator&lt;&lt;(</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        <span class="keyword">const</span> std::array&lt;T, N&gt;&amp; a) {</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        copy(a.data(), a.size());</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    }</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span> </div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    std::enable_if_t&lt;details::nontrivial_packable&lt;T&gt;, <a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp;&gt; operator&lt;&lt;(</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>        <span class="keyword">const</span> std::array&lt;T, N&gt;&amp; a) {</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; t : a) *<span class="keyword">this</span> &lt;&lt; t;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    }</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> </div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>   <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>    Vector m_data{};</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>    std::size_t m_target_size{0};</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span> </div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    [[nodiscard]] <span class="keyword">const</span> <span class="keywordtype">void</span>* as_voidp()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>(); }</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>    <span class="keywordtype">void</span> copy(<span class="keyword">const</span> <span class="keywordtype">void</span>* p, <span class="keywordtype">int</span> n) {</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        <span class="keyword">auto</span> bp = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>std::byte*<span class="keyword">&gt;</span>(p);</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        <span class="comment">// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)</span></div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        <span class="keyword">auto</span> ep = bp + n;</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>        m_data.insert(m_data.end(), bp, ep);</div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>    }</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span> </div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>    <span class="keywordtype">void</span> check_size()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>        <span class="keywordflow">if</span> (m_target_size &gt; 0 &amp;&amp; <a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>() != m_target_size) {</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>            <span class="keywordflow">throw</span> size_error{std::string(<span class="stringliteral">&quot;packer size &quot;</span>) +</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>                             std::to_string(<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>()) + <span class="stringliteral">&quot; &lt;&gt; &quot;</span> +</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>                             std::to_string(m_target_size)};</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>        }</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>    }</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>};</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span> </div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>}  <span class="comment">// namespace kerry</span></div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span> </div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span><span class="preprocessor">#endif  </span><span class="comment">// KERRY_PACKER_H</span></div>
+<div class="ttc" id="aclasskerry_1_1packer_html"><div class="ttname"><a href="classkerry_1_1packer.html">kerry::packer</a></div><div class="ttdoc">Pack data into a binary protocol packet in a C++ manner.</div><div class="ttdef"><b>Definition:</b> packer.hpp:163</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_a2fbaeb98668999d7a2cb62e4261ac02b"><div class="ttname"><a href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">kerry::packer::size</a></div><div class="ttdeci">auto size() const</div><div class="ttdoc">Return the current size of the packed data, in bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:211</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_a4d7779ed00875ecbf7625c0e9371fb35"><div class="ttname"><a href="classkerry_1_1packer.html#a4d7779ed00875ecbf7625c0e9371fb35">kerry::packer::reserve</a></div><div class="ttdeci">void reserve(std::size_t size)</div><div class="ttdoc">Reserve space for size bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:202</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_a6a88f64e85f8580b5777cc8fa7263273"><div class="ttname"><a href="classkerry_1_1packer.html#a6a88f64e85f8580b5777cc8fa7263273">kerry::packer::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear the packer for re-use.</div><div class="ttdef"><b>Definition:</b> packer.hpp:286</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_a7c320d4173497caa9549a46ad2597bee"><div class="ttname"><a href="classkerry_1_1packer.html#a7c320d4173497caa9549a46ad2597bee">kerry::packer::target_size</a></div><div class="ttdeci">auto target_size() const</div><div class="ttdoc">The target size for this packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:267</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_aa156481c0a03d69ab710d4c6dbcb4f25"><div class="ttname"><a href="classkerry_1_1packer.html#aa156481c0a03d69ab710d4c6dbcb4f25">kerry::packer::operator&lt;&lt;</a></div><div class="ttdeci">std::enable_if_t&lt; details::byte_integral&lt; B &gt;, packer &amp; &gt; operator&lt;&lt;(B b)</div><div class="ttdoc">Insert a 1-byte integral type.</div><div class="ttdef"><b>Definition:</b> packer.hpp:306</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_ab2710cb710ffcedeae61663d0ec58782"><div class="ttname"><a href="classkerry_1_1packer.html#ab2710cb710ffcedeae61663d0ec58782">kerry::packer::packer</a></div><div class="ttdeci">packer(std::size_t size)</div><div class="ttdoc">Construct a new packer object with a known packet size.</div><div class="ttdef"><b>Definition:</b> packer.hpp:181</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_abcd10526d48b5341c0d6f02355b576ee"><div class="ttname"><a href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">kerry::packer::data</a></div><div class="ttdeci">auto data() const</div><div class="ttdoc">Return a pointer to the constructed packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:223</div></div>
 <div class="ttc" id="aclasskerry_1_1packer_html_ac8f1dc30ff0fc8f7a3f431d4c034f49e"><div class="ttname"><a href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">kerry::packer::packer</a></div><div class="ttdeci">packer()=default</div><div class="ttdoc">Construct a new packer object with variable size.</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_ae6fed85111b3d6f4c25f6c2dcd72dc20"><div class="ttname"><a href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">kerry::packer::operator&lt;&lt;</a></div><div class="ttdeci">packer &amp; operator&lt;&lt;(const std::byte(&amp;b)[N])</div><div class="ttdoc">Efficiently insert a C-style array of std::byte.</div><div class="ttdef"><b>Definition:</b> packer.hpp:315</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_aff68874b12f89c157ef035ade186b128"><div class="ttname"><a href="classkerry_1_1packer.html#aff68874b12f89c157ef035ade186b128">kerry::packer::push_back</a></div><div class="ttdeci">std::enable_if_t&lt; details::packable&lt; T &gt; &gt; push_back(const T &amp;val)</div><div class="ttdoc">Push any insertable type to the end of the packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:397</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_ae6fed85111b3d6f4c25f6c2dcd72dc20"><div class="ttname"><a href="classkerry_1_1packer.html#ae6fed85111b3d6f4c25f6c2dcd72dc20">kerry::packer::operator&lt;&lt;</a></div><div class="ttdeci">packer &amp; operator&lt;&lt;(const std::byte(&amp;b)[N])</div><div class="ttdoc">Efficiently insert a C-style array of std::byte.</div><div class="ttdef"><b>Definition:</b> packer.hpp:318</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_aff68874b12f89c157ef035ade186b128"><div class="ttname"><a href="classkerry_1_1packer.html#aff68874b12f89c157ef035ade186b128">kerry::packer::push_back</a></div><div class="ttdeci">std::enable_if_t&lt; details::packable&lt; T &gt; &gt; push_back(const T &amp;val)</div><div class="ttdoc">Push any insertable type to the end of the packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:400</div></div>
 <div class="ttc" id="ais__insertable_8hpp_html"><div class="ttname"><a href="is__insertable_8hpp.html">is_insertable.hpp</a></div></div>
-<div class="ttc" id="apacker_8hpp_html_a0d4ab4b9144943bc5c21476c4be1e6e9"><div class="ttname"><a href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">kerry::details::packable</a></div><div class="ttdeci">constexpr bool packable</div><div class="ttdoc">A type trait to represent a type that can be inserted into a packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:44</div></div>
-<div class="ttc" id="apacker_8hpp_html_a333952006ce717c4cebb63070dfcf9b8"><div class="ttname"><a href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">kerry::details::byte_packable</a></div><div class="ttdeci">constexpr bool byte_packable</div><div class="ttdoc">A type trait to represent a trivial type that can be inserted into a packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:53</div></div>
-<div class="ttc" id="apacker_8hpp_html_a7aa8ec4a2befbe809c2b3c5ca566e21f"><div class="ttname"><a href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">kerry::details::multibyte_packable</a></div><div class="ttdeci">constexpr bool multibyte_packable</div><div class="ttdoc">A type trait to represent a non-trivial type that can be inserted into a packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:62</div></div>
-<div class="ttc" id="apacker_8hpp_html_abd5356af8d23f000fbf26f12e742ffae"><div class="ttname"><a href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">kerry::details::byte_integral</a></div><div class="ttdeci">constexpr bool byte_integral</div><div class="ttdoc">A type trait that is true if T is a 1-byte integral type.</div><div class="ttdef"><b>Definition:</b> packer.hpp:70</div></div>
-<div class="ttc" id="astructkerry_1_1size__error_html"><div class="ttname"><a href="structkerry_1_1size__error.html">kerry::size_error</a></div><div class="ttdoc">Throw this error when added data exceeds pre-defined size.</div><div class="ttdef"><b>Definition:</b> packer.hpp:30</div></div>
+<div class="ttc" id="apacker_8hpp_html_a0d4ab4b9144943bc5c21476c4be1e6e9"><div class="ttname"><a href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">kerry::details::packable</a></div><div class="ttdeci">constexpr bool packable</div><div class="ttdoc">A type trait to represent a type that can be inserted into a packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:42</div></div>
+<div class="ttc" id="apacker_8hpp_html_abd5356af8d23f000fbf26f12e742ffae"><div class="ttname"><a href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">kerry::details::byte_integral</a></div><div class="ttdeci">constexpr bool byte_integral</div><div class="ttdoc">A type trait that is true if T is a 1-byte integral type.</div><div class="ttdef"><b>Definition:</b> packer.hpp:66</div></div>
+<div class="ttc" id="apacker_8hpp_html_ac5900c79b3e132484d042dad99996e51"><div class="ttname"><a href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">kerry::details::nontrivial_packable</a></div><div class="ttdeci">constexpr bool nontrivial_packable</div><div class="ttdoc">A type trait to represent a non-trivial type that can be inserted into a packer.</div><div class="ttdef"><b>Definition:</b> packer.hpp:54</div></div>
+<div class="ttc" id="astructkerry_1_1size__error_html"><div class="ttname"><a href="structkerry_1_1size__error.html">kerry::size_error</a></div><div class="ttdoc">Throw this error when added data exceeds pre-defined size.</div><div class="ttdef"><b>Definition:</b> packer.hpp:28</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

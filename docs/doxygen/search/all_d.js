@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eformat_5fguard_0',['~format_guard',['../classglucc_1_1format__guard.html#a4dc222192d632aa98fd41b851c345279',1,'glucc::format_guard']]]
+  ['unpacker_0',['unpacker',['../classjames_1_1unpacker.html',1,'james']]],
+  ['unpacker_2ehpp_1',['unpacker.hpp',['../unpacker_8hpp.html',1,'']]]
 ];

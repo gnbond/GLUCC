@@ -145,22 +145,22 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> () const
 <tr class="memitem:acf32e58849ee41b24719fb79761d2a68"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">details::byte_integral</a>&lt; B &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#acf32e58849ee41b24719fb79761d2a68">operator&lt;&lt;</a> (const B(&amp;b)[N])</td></tr>
 <tr class="memdesc:acf32e58849ee41b24719fb79761d2a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Efficiently insert a C-style array of 1-byte integral types.  <br /></td></tr>
 <tr class="separator:acf32e58849ee41b24719fb79761d2a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9754d241bc64c6d0b514ab08421b6d3f"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
-<tr class="memitem:a9754d241bc64c6d0b514ab08421b6d3f"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">details::multibyte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#a9754d241bc64c6d0b514ab08421b6d3f">operator&lt;&lt;</a> (const T(&amp;b)[N])</td></tr>
-<tr class="memdesc:a9754d241bc64c6d0b514ab08421b6d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a fixed-size C-style array of packable types.  <br /></td></tr>
-<tr class="separator:a9754d241bc64c6d0b514ab08421b6d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3763ea9f478d40187a392cfe4a3df18"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
+<tr class="memitem:ac3763ea9f478d40187a392cfe4a3df18"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">details::nontrivial_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#ac3763ea9f478d40187a392cfe4a3df18">operator&lt;&lt;</a> (const T(&amp;b)[N])</td></tr>
+<tr class="memdesc:ac3763ea9f478d40187a392cfe4a3df18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a fixed-size C-style array of packable types.  <br /></td></tr>
+<tr class="separator:ac3763ea9f478d40187a392cfe4a3df18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff68874b12f89c157ef035ade186b128"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aff68874b12f89c157ef035ade186b128"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">details::packable</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#aff68874b12f89c157ef035ade186b128">push_back</a> (const T &amp;val)</td></tr>
 <tr class="memdesc:aff68874b12f89c157ef035ade186b128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push any insertable type to the end of the packet.  <br /></td></tr>
 <tr class="separator:aff68874b12f89c157ef035ade186b128"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a709aa911a043bff637878b41fd61b6bd"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
-<tr class="memitem:a709aa911a043bff637878b41fd61b6bd"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">details::byte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#a709aa911a043bff637878b41fd61b6bd">operator&lt;&lt;</a> (const std::array&lt; T, N &gt; &amp;a)</td></tr>
-<tr class="memdesc:a709aa911a043bff637878b41fd61b6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a std::array of single-byte packable data.  <br /></td></tr>
-<tr class="separator:a709aa911a043bff637878b41fd61b6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab01ea9ccc212e0fed217ce90e7d88f5c"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
-<tr class="memitem:ab01ea9ccc212e0fed217ce90e7d88f5c"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">details::multibyte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#ab01ea9ccc212e0fed217ce90e7d88f5c">operator&lt;&lt;</a> (const std::array&lt; T, N &gt; &amp;a)</td></tr>
-<tr class="memdesc:ab01ea9ccc212e0fed217ce90e7d88f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a std::array of multi-byte packable data.  <br /></td></tr>
-<tr class="separator:ab01ea9ccc212e0fed217ce90e7d88f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01db403fb3719e9fafeabc80f04d186d"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
+<tr class="memitem:a01db403fb3719e9fafeabc80f04d186d"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">details::byte_integral</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#a01db403fb3719e9fafeabc80f04d186d">operator&lt;&lt;</a> (const std::array&lt; T, N &gt; &amp;a)</td></tr>
+<tr class="memdesc:a01db403fb3719e9fafeabc80f04d186d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a std::array of single-byte packable data.  <br /></td></tr>
+<tr class="separator:a01db403fb3719e9fafeabc80f04d186d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66653e41b6d106af82a1a704fc00bf34"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t N&gt; </td></tr>
+<tr class="memitem:a66653e41b6d106af82a1a704fc00bf34"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">details::nontrivial_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkerry_1_1packer.html#a66653e41b6d106af82a1a704fc00bf34">operator&lt;&lt;</a> (const std::array&lt; T, N &gt; &amp;a)</td></tr>
+<tr class="memdesc:a66653e41b6d106af82a1a704fc00bf34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a std::array of multi-byte packable data.  <br /></td></tr>
+<tr class="separator:a66653e41b6d106af82a1a704fc00bf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Packet data access</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Packets can be treated as streams of <code>std::byte</code>, <code>char</code>, or <code>unsigned char</code> types. Packets can be also be accessed as a <code>void*</code>.</p>
 <p>These functions allow implicit conversion to the required type. Like the <code><a class="el" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee" title="Return a pointer to the constructed packet.">data()</a></code> member, they will throw <code><a class="el" href="structkerry_1_1size__error.html" title="Throw this error when added data exceeds pre-defined size.">size_error</a></code> for packers constructed with a target size, if the packed data is not exactly the right length.</p>
@@ -170,8 +170,8 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> () const
 <div class="line"><a class="code hl_class" href="classkerry_1_1packer.html">packer</a> p{20};</div>
 <div class="line"><span class="comment">// Insert exactly 20 bytes of data into p</span></div>
 <div class="line"><span class="keywordflow">if</span> (send(sock, p, p.size()) &lt; 0) { handle error; }</div>
-<div class="ttc" id="aclasskerry_1_1packer_html"><div class="ttname"><a href="classkerry_1_1packer.html">kerry::packer</a></div><div class="ttdoc">Pack data into a binary protocol packet in a C++ manner.</div><div class="ttdef"><b>Definition:</b> packer.hpp:158</div></div>
-<div class="ttc" id="aclasskerry_1_1packer_html_abcd10526d48b5341c0d6f02355b576ee"><div class="ttname"><a href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">kerry::packer::data</a></div><div class="ttdeci">auto data() const</div><div class="ttdoc">Return a pointer to the constructed packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:218</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html"><div class="ttname"><a href="classkerry_1_1packer.html">kerry::packer</a></div><div class="ttdoc">Pack data into a binary protocol packet in a C++ manner.</div><div class="ttdef"><b>Definition:</b> packer.hpp:163</div></div>
+<div class="ttc" id="aclasskerry_1_1packer_html_abcd10526d48b5341c0d6f02355b576ee"><div class="ttname"><a href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">kerry::packer::data</a></div><div class="ttdeci">auto data() const</div><div class="ttdoc">Return a pointer to the constructed packet.</div><div class="ttdef"><b>Definition:</b> packer.hpp:223</div></div>
 </div><!-- fragment --> </div></td></tr>
 <tr class="memitem:ac6d71eb5a366865cd77486f5d82508bb"><td class="memItemLeft" align="right" valign="top"><a id="ac6d71eb5a366865cd77486f5d82508bb" name="ac6d71eb5a366865cd77486f5d82508bb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator const void *</b> ()</td></tr>
@@ -214,22 +214,23 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Pack data into a binary protocol packet in a C++ manner. </p>
 <p>Dealing with binary protocol packets hasn't really changed in 40 years - it's still usually C code, and usually a horrible mix of type punning, malloc()'d memory, unsafe pointer casts, and calls to <code>htonl()</code> and <code>memcpy()</code>, all written with silent prayers that the new 64-bit compiler version won't add invisible padding bytes to your structs.</p>
+<p>Or you can wind up having to define two versions of each protocol packet, a POD structure that can be bit-bashed onto the wire and a proper C++ object that implements proper object-oriented design with accessors and possibly even inheritance, but who's memory layout is not wire-compatible. This requires even more code to copy between the POD version and the C++ version of the packet.</p>
 <p>Then you run a static analyzer over your code, and have to silence hundreds of warnings about all those unsafe 40-year-old coding practices. And heaven help you if you also need to meet MISRA or similar high-integrity software standards.</p>
 <p>There's gotta be a better way. A C++ way.</p>
 <p>Well, now there is.</p>
-<p><a class="el" href="classkerry_1_1packer.html" title="Pack data into a binary protocol packet in a C++ manner.">kerry::packer</a> uses an API inspired by C++ iostreams inserters that is extensible, type-safe and bounds-safe. It wraps <code>std::vector&lt;std::byte&gt;</code> to store the generated packet data and avoid any memory leaks or bounds errors. It provides inserters for 1/2/4-byte integral types (converting to network byte order as required). It provides inserters for fixed-size (C-style) arrays and std::arrays of supported types, including arrays of custom types with user-written inserters. It hides all the network byte order conversions, the reinterpret_cast&lt;&gt;s and the memory copies needed to take a C++ object and turn it into a byte stream.</p>
-<p>The packer can be created in two modes. The default-constructed packer is suitable for variable-sized network packets, leaving the calling code to be responsible for checking the size of the generated packet matches expectation, if that is required. A packer created with a size argument is suitable for fixed-size network packets, and the packer will check that the generated packet is exactly that many bytes (by throwing an exception when the data is extracted if the size is not exactly correct).</p>
+<p><a class="el" href="classkerry_1_1packer.html" title="Pack data into a binary protocol packet in a C++ manner.">kerry::packer</a> uses an API inspired by C++ iostreams inserters that is extensible, type-safe and bounds-safe. It wraps <code>std::vector&lt;std::byte&gt;</code> to store the generated packet data and avoid any memory leaks or bounds errors. It provides inserters for 1/2/4-byte integral types (converting to network byte order as required). It provides inserters for fixed-size (C-style) arrays and std::arrays of supported types, including arrays of custom types with user-written inserters. It hides all the network byte order conversions, the static_cast&lt;&gt;s and the memory copies needed to take a C++ object and turn it into a byte stream.</p>
+<p>The packer can be created in two modes. The default-constructed packer is suitable for variable-sized protocol packets, leaving the calling code to be responsible for checking the size of the generated packet matches expectation, if that is required. A packer created with a size argument is suitable for fixed-size protocol packets, and the packer will check that the generated packet is exactly that many bytes (by throwing an exception when the data is extracted if the size is not exactly correct).</p>
 <p>Another annoyance in network programming is the inconsistencies with the types used to store binary packets and the standard functions used to manipulate those packets. Old code uses <code>char *</code> or sometimes <code>unsigned char*</code>. Slightly less old code uses <code>void *</code>. The packer uses std::byte as the native type (this use-case seems to be the main intention of the std::byte type) but allows implicit conversions to <code>void*</code>, <code>char*</code> and <code>unsigned char*</code>. So the following code is typical: </p><div class="fragment"><div class="line"><a class="code hl_class" href="classkerry_1_1packer.html">packer</a> p;</div>
 <div class="line"><span class="keywordtype">int</span> sock = socket(...);</div>
 <div class="line"><span class="comment">//...</span></div>
 <div class="line">p &lt;&lt; some &lt;&lt; <a class="code hl_function" href="classkerry_1_1packer.html#abcd10526d48b5341c0d6f02355b576ee">data</a>;</div>
 <div class="line">send(sock, p, p.<a class="code hl_function" href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">size</a>(), 0)</div>
-<div class="ttc" id="aclasskerry_1_1packer_html_a2fbaeb98668999d7a2cb62e4261ac02b"><div class="ttname"><a href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">kerry::packer::size</a></div><div class="ttdeci">auto size() const</div><div class="ttdoc">Return the current size of the packed data, in bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:206</div></div>
-</div><!-- fragment --><p>A somewhat contrived example: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>item { uint8_t tag; uint16_t value; }</div>
+<div class="ttc" id="aclasskerry_1_1packer_html_a2fbaeb98668999d7a2cb62e4261ac02b"><div class="ttname"><a href="classkerry_1_1packer.html#a2fbaeb98668999d7a2cb62e4261ac02b">kerry::packer::size</a></div><div class="ttdeci">auto size() const</div><div class="ttdoc">Return the current size of the packed data, in bytes.</div><div class="ttdef"><b>Definition:</b> packer.hpp:211</div></div>
+</div><!-- fragment --><p>A somewhat contrived example, a fixed-size packet with up to 4 tag-value pairs and a checksum: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>item { uint8_t tag; uint16_t value; }</div>
 <div class="line"><span class="keyword">struct </span>item_packet { uint8_t count; item items[4]; uint32_t checksum; }</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(<a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; p, <span class="keyword">const</span> item&amp; i) {</div>
-<div class="line">    <span class="keywordflow">return</span> p &lt;&lt; i.count &lt;&lt; i.value;</div>
+<div class="line">    <span class="keywordflow">return</span> p &lt;&lt; i.tag &lt;&lt; i.value;</div>
 <div class="line">}</div>
 <div class="line"><a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; operator&lt;&lt;(<a class="code hl_function" href="classkerry_1_1packer.html#ac8f1dc30ff0fc8f7a3f431d4c034f49e">packer</a>&amp; p, <span class="keyword">const</span> item_packet&amp; ip) {</div>
 <div class="line">    <span class="keywordflow">return</span> p &lt;&lt; ip.count &lt;&lt; ip.items &lt;&lt; ip.checksum;</div>
@@ -457,8 +458,8 @@ template&lt;typename B , std::size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a709aa911a043bff637878b41fd61b6bd" name="a709aa911a043bff637878b41fd61b6bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a709aa911a043bff637878b41fd61b6bd">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[3/6]</span></h2>
+<a id="a01db403fb3719e9fafeabc80f04d186d" name="a01db403fb3719e9fafeabc80f04d186d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01db403fb3719e9fafeabc80f04d186d">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -469,7 +470,7 @@ template&lt;typename T , std::size_t N&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">details::byte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
+          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">details::byte_integral</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
           <td>(</td>
           <td class="paramtype">const std::array&lt; T, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
@@ -502,8 +503,8 @@ template&lt;typename T , std::size_t N&gt; </div>
 
 </div>
 </div>
-<a id="ab01ea9ccc212e0fed217ce90e7d88f5c" name="ab01ea9ccc212e0fed217ce90e7d88f5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab01ea9ccc212e0fed217ce90e7d88f5c">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[4/6]</span></h2>
+<a id="a66653e41b6d106af82a1a704fc00bf34" name="a66653e41b6d106af82a1a704fc00bf34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66653e41b6d106af82a1a704fc00bf34">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -514,7 +515,7 @@ template&lt;typename T , std::size_t N&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">details::multibyte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
+          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">details::nontrivial_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
           <td>(</td>
           <td class="paramtype">const std::array&lt; T, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
@@ -583,8 +584,8 @@ template&lt;std::size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a9754d241bc64c6d0b514ab08421b6d3f" name="a9754d241bc64c6d0b514ab08421b6d3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9754d241bc64c6d0b514ab08421b6d3f">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[6/6]</span></h2>
+<a id="ac3763ea9f478d40187a392cfe4a3df18" name="ac3763ea9f478d40187a392cfe4a3df18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3763ea9f478d40187a392cfe4a3df18">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -595,7 +596,7 @@ template&lt;typename T , std::size_t N&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">details::multibyte_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
+          <td class="memname">std::enable_if_t&lt; <a class="el" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">details::nontrivial_packable</a>&lt; T &gt;, <a class="el" href="classkerry_1_1packer.html">packer</a> &amp; &gt; kerry::packer::operator&lt;&lt; </td>
           <td>(</td>
           <td class="paramtype">const T(&amp;)&#160;</td>
           <td class="paramname"><em>b</em>[N]</td><td>)</td>

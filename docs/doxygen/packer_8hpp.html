@@ -75,9 +75,7 @@ $(function() {
   <div class="headertitle"><div class="title">packer.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;cstdint&gt;</code><br />
-<code>#include &lt;initializer_list&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
@@ -101,16 +99,12 @@ Variables</h2></td></tr>
 <tr class="memitem:a0d4ab4b9144943bc5c21476c4be1e6e9"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#a0d4ab4b9144943bc5c21476c4be1e6e9">kerry::details::packable</a> = <a class="el" href="is__insertable_8hpp.html#a1965f6f9ff9ef7d2bfb02826c45dd8e3">glucc::is_insertable_into_v</a>&lt;T, packer&gt;</td></tr>
 <tr class="memdesc:a0d4ab4b9144943bc5c21476c4be1e6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type trait to represent a type that can be inserted into a packer.  <br /></td></tr>
 <tr class="separator:a0d4ab4b9144943bc5c21476c4be1e6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a333952006ce717c4cebb63070dfcf9b8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a333952006ce717c4cebb63070dfcf9b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#a333952006ce717c4cebb63070dfcf9b8">kerry::details::byte_packable</a> = sizeof(T) == 1 &amp;&amp; packable&lt;T&gt;</td></tr>
-<tr class="memdesc:a333952006ce717c4cebb63070dfcf9b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type trait to represent a trivial type that can be inserted into a packer.  <br /></td></tr>
-<tr class="separator:a333952006ce717c4cebb63070dfcf9b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aa8ec4a2befbe809c2b3c5ca566e21f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a7aa8ec4a2befbe809c2b3c5ca566e21f"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#a7aa8ec4a2befbe809c2b3c5ca566e21f">kerry::details::multibyte_packable</a> = sizeof(T) &gt;= 2 &amp;&amp; packable&lt;T&gt;</td></tr>
-<tr class="memdesc:a7aa8ec4a2befbe809c2b3c5ca566e21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type trait to represent a non-trivial type that can be inserted into a packer.  <br /></td></tr>
-<tr class="separator:a7aa8ec4a2befbe809c2b3c5ca566e21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5900c79b3e132484d042dad99996e51"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac5900c79b3e132484d042dad99996e51"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#ac5900c79b3e132484d042dad99996e51">kerry::details::nontrivial_packable</a></td></tr>
+<tr class="memdesc:ac5900c79b3e132484d042dad99996e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type trait to represent a non-trivial type that can be inserted into a packer.  <br /></td></tr>
+<tr class="separator:ac5900c79b3e132484d042dad99996e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd5356af8d23f000fbf26f12e742ffae"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abd5356af8d23f000fbf26f12e742ffae"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">kerry::details::byte_integral</a> = sizeof(T) == 1 &amp;&amp; std::is_integral_v&lt;T&gt;</td></tr>
+<tr class="memitem:abd5356af8d23f000fbf26f12e742ffae"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="packer_8hpp.html#abd5356af8d23f000fbf26f12e742ffae">kerry::details::byte_integral</a></td></tr>
 <tr class="memdesc:abd5356af8d23f000fbf26f12e742ffae"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type trait that is true if T is a 1-byte integral type.  <br /></td></tr>
 <tr class="separator:abd5356af8d23f000fbf26f12e742ffae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -132,7 +126,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool kerry::details::byte_integral = sizeof(T) == 1 &amp;&amp; std::is_integral_v&lt;T&gt;</td>
+          <td class="memname">constexpr bool kerry::details::byte_integral</td>
         </tr>
       </table>
   </td>
@@ -141,19 +135,22 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    <span class="keyword">sizeof</span>(T) == 1 &amp;&amp; (std::is_integral_v&lt;T&gt; || std::is_same_v&lt;T, std::byte&gt;)</div>
+</div><!-- fragment -->
 <p>A type trait that is true if T is a 1-byte integral type. </p>
+<p>This represents a scalar type that can be packed without byte-order conversion</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
+    <tr><td class="paramname">T</td><td>The type to test </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a333952006ce717c4cebb63070dfcf9b8" name="a333952006ce717c4cebb63070dfcf9b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a333952006ce717c4cebb63070dfcf9b8">&#9670;&#160;</a></span>byte_packable</h2>
+<a id="ac5900c79b3e132484d042dad99996e51" name="ac5900c79b3e132484d042dad99996e51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5900c79b3e132484d042dad99996e51">&#9670;&#160;</a></span>nontrivial_packable</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,7 +161,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool kerry::details::byte_packable = sizeof(T) == 1 &amp;&amp; packable&lt;T&gt;</td>
+          <td class="memname">constexpr bool kerry::details::nontrivial_packable</td>
         </tr>
       </table>
   </td>
@@ -173,43 +170,14 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>A type trait to represent a trivial type that can be inserted into a packer. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7aa8ec4a2befbe809c2b3c5ca566e21f" name="a7aa8ec4a2befbe809c2b3c5ca566e21f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7aa8ec4a2befbe809c2b3c5ca566e21f">&#9670;&#160;</a></span>multibyte_packable</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool kerry::details::multibyte_packable = sizeof(T) &gt;= 2 &amp;&amp; packable&lt;T&gt;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    (<span class="keyword">sizeof</span>(T) &gt;= 2 || std::is_class_v&lt;T&gt;)&amp;&amp;packable&lt;T&gt;</div>
+</div><!-- fragment -->
 <p>A type trait to represent a non-trivial type that can be inserted into a packer. </p>
+<p>This might be a scalar type which needs byteorder conversions or a class type that needs a custom inserter</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
+    <tr><td class="paramname">T</td><td>The type to test </td></tr>
   </table>
   </dd>
 </dl>
@@ -241,7 +209,7 @@ template&lt;typename T &gt; </div>
 <p>A type trait to represent a type that can be inserted into a packer. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
+    <tr><td class="paramname">T</td><td>The type to test </td></tr>
   </table>
   </dd>
 </dl>
