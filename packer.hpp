@@ -36,36 +36,35 @@ namespace details {
 /**
  * @brief A type trait to represent a type that can be inserted into a packer
  *
- * @tparam T
+ * @tparam T The type to test
  */
 template <typename T>
 constexpr bool packable = glucc::is_insertable_into_v<T, packer>;
 
 /**
- * @brief A type trait to represent a trivial type that can be inserted into
- * a packer
- *
- * @tparam T
- */
-template <typename T>
-constexpr bool byte_packable = sizeof(T) == 1 && packable<T>;
-
-/**
  * @brief A type trait to represent a non-trivial type that can be inserted into
  * a packer
  *
- * @tparam T
+ * This might be a scalar type which needs byteorder conversions or a class type
+ * that needs a custom inserter
+ *
+ * @tparam T The type to test
  */
 template <typename T>
-constexpr bool multibyte_packable = sizeof(T) >= 2 && packable<T>;
+constexpr bool nontrivial_packable =
+    (sizeof(T) >= 2 || std::is_class_v<T>)&&packable<T>;
 
 /**
  * @brief A type trait that is true if T is a 1-byte integral type
  *
- * @tparam T
+ * This represents a scalar type that can be packed without byte-order
+ * conversion
+ *
+ * @tparam T The type to test
  */
 template <typename T>
-constexpr bool byte_integral = sizeof(T) == 1 && std::is_integral_v<T>;
+constexpr bool byte_integral =
+    sizeof(T) == 1 && (std::is_integral_v<T> || std::is_same_v<T, std::byte>);
 
 }  // namespace details
 
@@ -77,6 +76,13 @@ constexpr bool byte_integral = sizeof(T) == 1 && std::is_integral_v<T>;
  memory, unsafe pointer casts, and calls to `htonl()` and `memcpy()`, all
  written with silent prayers that the new 64-bit compiler version won't add
  invisible padding bytes to your structs.
+
+ Or you can wind up having to define two versions of each protocol packet, a POD
+ structure that can be bit-bashed onto the wire and a proper C++ object that
+ implements proper object-oriented design with accessors and possibly even
+ inheritance, but who's memory layout is not wire-compatible.  This requires
+ even more code to copy between the POD version and the C++ version of the
+ packet.
 
  Then you run a static analyzer over your code, and have to silence hundreds of
  warnings about all those unsafe 40-year-old coding practices.  And heaven help
@@ -94,14 +100,14 @@ provides inserters for 1/2/4-byte integral types (converting to network byte
 order as required).  It provides inserters for fixed-size (C-style) arrays and
 std::arrays of supported types, including arrays of custom types with
 user-written inserters.  It hides all the network byte order conversions, the
-reinterpret_cast<>s and the memory copies needed to take a C++ object and turn
-it into a byte stream.
+static_cast<>s and the memory copies needed to take a C++ object and turn it
+into a byte stream.
 
 The packer can be created in two modes.  The default-constructed packer is
-suitable for variable-sized network packets, leaving the calling code to be
+suitable for variable-sized protocol packets, leaving the calling code to be
 responsible for checking the size of the generated packet matches expectation,
 if that is required.  A packer created with a size argument is suitable for
-fixed-size network packets, and the packer will check that the generated packet
+fixed-size protocol packets, and the packer will check that the generated packet
 is exactly that many bytes (by throwing an exception when the data is extracted
 if the size is not exactly correct).
 
@@ -120,13 +126,14 @@ p << some << data;
 send(sock, p, p.size(), 0)
 ```
 
-A somewhat contrived example:
+A somewhat contrived example, a fixed-size packet with up to 4 tag-value pairs
+and a checksum:
 ```
 struct item { uint8_t tag; uint16_t value; }
 struct item_packet { uint8_t count; item items[4]; uint32_t checksum; }
 
 packer& operator<<(packer& p, const item& i) {
-    return p << i.count << i.value;
+    return p << i.tag << i.value;
 }
 packer& operator<<(packer& p, const item_packet& ip) {
     return p << ip.count << ip.items << ip.checksum;
@@ -240,15 +247,13 @@ class packer {
      * ```
      */
     ///@{
-    [[nodiscard]] operator const void*() { return data(); }
+    [[nodiscard]] operator const void*() { return as_voidp(); }
     [[nodiscard]] operator const std::byte*() { return data(); }
     [[nodiscard]] operator const char*() {
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        return reinterpret_cast<const char*>(data());
+        return static_cast<const char*>(as_voidp());
     }
     [[nodiscard]] operator const unsigned char*() {
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        return reinterpret_cast<const unsigned char*>(data());
+        return static_cast<const unsigned char*>(as_voidp());
     }
     ///@}
     [[nodiscard]] auto capacity() const { return m_data.capacity(); }
@@ -342,7 +347,7 @@ class packer {
      * @return packer&
      */
     template <typename T, std::size_t N>
-    std::enable_if_t<details::multibyte_packable<T>, packer&> operator<<(
+    std::enable_if_t<details::nontrivial_packable<T>, packer&> operator<<(
         const T (&b)[N]) {
         const T* p = b;
         for (int n = N; n > 0; --n, ++p) {
@@ -407,7 +412,7 @@ class packer {
      * @return packer&
      */
     template <typename T, std::size_t N>
-    std::enable_if_t<details::byte_packable<T>, packer&> operator<<(
+    std::enable_if_t<details::byte_integral<T>, packer&> operator<<(
         const std::array<T, N>& a) {
         copy(a.data(), a.size());
         return *this;
@@ -422,7 +427,7 @@ class packer {
      * @return packer&
      */
     template <typename T, std::size_t N>
-    std::enable_if_t<details::multibyte_packable<T>, packer&> operator<<(
+    std::enable_if_t<details::nontrivial_packable<T>, packer&> operator<<(
         const std::array<T, N>& a) {
         for (auto& t : a) *this << t;
         return *this;
@@ -432,13 +437,13 @@ class packer {
     Vector m_data{};
     std::size_t m_target_size{0};
 
+    [[nodiscard]] const void* as_voidp() const { return data(); }
+
     void copy(const void* p, int n) {
-        // half the point of this class is to hide the inevitable casts and
-        // pointer messes
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        auto bp = reinterpret_cast<const std::byte*>(p);
+        auto bp = static_cast<const std::byte*>(p);
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-        m_data.insert(m_data.end(), bp, bp + n);
+        auto ep = bp + n;
+        m_data.insert(m_data.end(), bp, ep);
     }
 
     void check_size() const {

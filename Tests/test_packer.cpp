@@ -16,6 +16,11 @@ using namespace kerry;
 
 using result = std::initializer_list<std::uint8_t>;
 
+struct Packable {};
+packer& operator<<(packer&, const Packable&);
+
+struct NotPackable {};
+
 namespace kerry {
 
 // This has to be in namespace kerry:: and be discovered using ADL else the
@@ -27,6 +32,30 @@ bool operator==(const packer& p, const result& r) {
                                               });
 }
 }  // namespace kerry
+
+TEST_CASE("packer type traits", "[packer]") {
+    CHECK(details::packable<std::uint8_t>);
+    CHECK(details::packable<std::uint16_t>);
+    CHECK(details::packable<std::uint32_t>);
+    CHECK(details::packable<Packable>);
+    CHECK_FALSE(details::packable<std::uint64_t>);
+    CHECK_FALSE(details::packable<double>);
+    CHECK_FALSE(details::packable<void*>);
+    CHECK_FALSE(details::packable<NotPackable>);
+
+    CHECK(details::byte_integral<std::uint8_t>);
+    CHECK(details::byte_integral<char>);
+    CHECK(details::byte_integral<unsigned char>);
+    CHECK(details::byte_integral<signed char>);
+    CHECK(details::byte_integral<std::byte>);
+    CHECK(details::byte_integral<bool>);
+
+    CHECK(details::nontrivial_packable<std::int16_t>);
+    CHECK(details::nontrivial_packable<std::uint16_t>);
+    CHECK(details::nontrivial_packable<std::int32_t>);
+    CHECK(details::nontrivial_packable<std::int32_t>);
+    CHECK(details::nontrivial_packable<Packable>);
+}
 
 TEST_CASE("packer basic", "[packer]") {
     packer p{};
