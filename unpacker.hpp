@@ -19,6 +19,8 @@
 
 namespace james {
 
+class unpacker;
+
 namespace details {
 
 // Some helper type traits
@@ -45,24 +47,43 @@ template <typename C>
 constexpr bool is_byte_container = byte_container_helper<C>::value;
 template <typename C>
 using byte_container_t = std::enable_if_t<is_byte_container<C>, C>;
+
+// A type trait to determine if a type can be extracted from an unpacker
+template <typename T, typename V = void>
+struct unpackable : std::false_type {};
+
+template <typename T>
+struct unpackable<
+    T, std::void_t<decltype(std::declval<unpacker&>() >> std::declval<T&>())>>
+    : std::true_type {};
+
+template <typename T>
+constexpr bool unpackable_v = unpackable<T>::value;
+
+template <typename T>
+using unpackable_t = std::enable_if_t<unpackable_v<T>, unpacker&>;
+
 }  // namespace details
 
 class unpacker {
+    using iterator = const unsigned char*;
+    // delegated constructor with void*, this is private.  Order of arguments is
+    // reversed to avoid ambiguous constructors. This hides all the casts in
+    // this one spot
+    unpacker(std::size_t n, const void* b)
+        : m_begin{static_cast<iterator>(b)},
+          m_end{m_begin + n},
+          m_next{m_begin} {}
+
    public:
     // unsigned char is the default packet data type
     unpacker(const unsigned char* data, std::size_t size)
-        : m_data{data}, m_size{size} {}
+        : unpacker(size, data) {}
 
-    unpacker(const std::byte* data, std::size_t size)
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        : unpacker{reinterpret_cast<const unsigned char*>(data), size} {}
-    unpacker(const char* data, std::size_t size)
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        : unpacker{reinterpret_cast<const unsigned char*>(data), size} {}
+    unpacker(const std::byte* data, std::size_t size) : unpacker(size, data) {}
+    unpacker(const char* data, std::size_t size) : unpacker(size, data) {}
 
     template <typename T, std::size_t N>
-    // clang-tidy bug, See https://github.com/llvm/llvm-project/issues/37250
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
     unpacker(const T (&array)[N]) : unpacker(std::data(array), N) {}
 
     // Applying SFINAE to constructor templates is a bit unusual.  There is no
@@ -72,16 +93,34 @@ class unpacker {
     // dummy second template argument and apply the SFINAE to the default
     // argument type
     template <typename C, typename V = details::byte_container_t<C>>
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
     unpacker(const C& container)
         : unpacker(std::data(container), std::size(container)) {}
 
-    [[nodiscard]] auto size() const { return m_size; }
-    [[nodiscard]] auto remaining() const { return m_size - m_next; }
-    void reset() { m_next = 0; }
+    [[nodiscard]] auto size() const { return m_end - m_begin; }
+    [[nodiscard]] auto remaining() const { return m_end - m_next; }
+    void reset() { m_next = m_begin; }
 
     unpacker& operator>>(unsigned char& c) {
         copy(&c, 1);
+        return *this;
+    }
+    unpacker& operator>>(signed char& c) {
+        copy(&c, 1);
+        return *this;
+    }
+    unpacker& operator>>(char& c) {
+        copy(&c, 1);
+        return *this;
+    }
+    unpacker& operator>>(bool& b) {
+        // need to force non-zero byte to true
+        unsigned char c{};
+        copy(&c, 1);
+        b = !!c;
+        return *this;
+    }
+    unpacker& operator>>(std::byte& b) {
+        copy(&b, 1);
         return *this;
     }
 
@@ -108,20 +147,41 @@ class unpacker {
         return *this;
     }
 
-   private:
-    const unsigned char* m_data;
-    std::size_t m_size;
-    std::size_t m_next{0};
+    template <typename T, std::size_t N>
+    details::unpackable_t<T> operator>>(T (&array)[N]) {
+        T* tp{array};
 
-    void check_size(unsigned n) {
-        if (m_next + n > m_size) throw std::length_error("unpacker overrun");
+        for (std::size_t n = N; n > 0; n--) {
+            *this >> *tp++;
+        }
+        return *this;
+    }
+
+    template <typename T, std::size_t N>
+    details::unpackable_t<T> operator>>(std::array<T, N>& array) {
+        for (auto& a : array) {
+            *this >> a;
+        }
+        return *this;
+    }
+
+   private:
+    // Give these default values here to keep clang-tidy quiet, as the
+    // clang-tidy rule cppcoreguidelines-pro-type-member-init does not
+    // recognise template constructors delegating to other constructors. See
+    // https://github.com/llvm/llvm-project/issues/37250
+
+    iterator m_begin{};
+    iterator m_end{};
+    iterator m_next{};
+
+    void check_size(std::size_t n) {
+        if (m_next + n > m_end) throw std::length_error("unpacker overrun");
     }
     void copy(void* p, std::size_t n) {
         check_size(n);
         auto ucp = static_cast<unsigned char*>(p);
-        auto dp = m_data + m_next;
-        m_next += n;
-        while (n-- > 0) *ucp++ = *dp++;
+        while (n-- > 0) *ucp++ = *m_next++;
     }
 };
 
